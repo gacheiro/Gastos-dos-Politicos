@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+  <ol>
+    {% for despesa in despesas %}
+      <li>
+        {{ despesa.servidor.nome }}: {{ despesa.valor }}
+      </li>
+    {% endfor %}
+  </ol>
+{% endblock %}
