@@ -1,4 +1,4 @@
-"""Integração com a api da câmara federal."""
+"""Integração simples com a api da câmara federal."""
 
 import requests
 
@@ -14,6 +14,7 @@ def deputados():
 
 def despesas(deputado_id):
     """Retorna as despesas do deputado."""
-    url = f"{BASE_URL}/deputados/{deputado_id}/despesas?ordem=DESC&ordenarPor=dataDocumento&itens=100"
+    url = (f"{BASE_URL}/deputados/{deputado_id}/despesas?"
+           "ordem=DESC&ordenarPor=dataDocumento&itens=100")
     r = requests.get(url, headers=HEADERS)
     return r.json()["dados"]

@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
-
+{% from 'shared/macros.html' import despesa, paginacao %}
 
 {% block content %}
-  <ol>
-    {% for despesa in despesas %}
-      <li>
-        {{ despesa.servidor.nome }}: {{ despesa.valor }}
-      </li>
-    {% endfor %}
-  </ol>
+  <h2>Últimas despesas dos deputados da Câmara Federal</h2>
+  <div>
+    <ul class="list-unstyled lista-despesas">
+      {% for desp in pagination.items %}
+        {{ despesa(desp) }}
+      {% endfor %}
+    </ul>
+    {{ paginacao(pagination, "pages.index") }}
+  </div>
 {% endblock %}

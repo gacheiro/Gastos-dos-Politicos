@@ -1,0 +1,38 @@
+{% macro despesa(desp) %}
+  <li id="{{ desp.id }}" class="media despesa mb-2 bg-white">
+    <img class="mr-3 rounded-circle" style="width: 68px; height: 90px;"
+         src="{{ desp.servidor.url_foto }}" alt="{{ desp.servidor.nome }}">
+    <div class="media-body">
+      <h5 class="mt-0">
+        {{ desp.servidor.nome }} <small>{{ desp.servidor.partido}}/{{ desp.servidor.uf }}</small>
+      </h5>
+      <p>R$ {{ "{:.2f}".format(desp.valor) }} em {{ desp.data }} com {{ desp.tipo|title }}.</p>
+    </div>
+  </li>
+{% endmacro %}
+
+
+{% macro paginacao(pagination, endpoint, page_id=None) %}
+  <nav aria-label="Paginação">
+    <ul class="pagination pagination-lg justify-content-end">
+      {% for page in pagination.iter_pages() %}
+        {% if page %}
+          {% if page == pagination.page %}
+            <li class="page-item active">
+              <span class="page-link">{{ page }}</span>
+            </li>
+          {% else %}
+            <li class="page-item">
+              {% if page_id %}
+                {% set url = url_for(endpoint, id=page_id, page=page) %}
+              {% else %}
+                {% set url = url_for(endpoint, page=page) %}
+              {% endif %}
+              <a class="page-link" href="{{ url }}">{{ page }}</a>
+            </li>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </nav>
+{% endmacro %}

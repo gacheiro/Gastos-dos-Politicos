@@ -8,6 +8,7 @@ class Servidor(db.Model):
     partido = db.Column(db.String(10), nullable=True)
     uf = db.Column(db.String(2), nullable=False)
     legislatura = db.Column(db.Integer, nullable=False)
+    url_foto = db.Column(db.String(250), nullable=True)
 
 
 class Despesa(db.Model):
@@ -16,7 +17,7 @@ class Despesa(db.Model):
                             nullable=False)
     tipo = db.Column(db.String(250), nullable=False)
     tipo_documento = db.Column(db.String(30), nullable=False)
-    data_documento = db.Column(db.Date, nullable=False)
+    data = db.Column(db.Date, nullable=False)
     num_documento = db.Column(db.Integer, nullable=False)
     valor = db.Column(db.Numeric, nullable=False)
     url_documento = db.Column(db.String(250), nullable=True)
