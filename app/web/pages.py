@@ -11,3 +11,15 @@ def index():
     query = Despesa.query.order_by(Despesa.data.desc())
     pagination = query.paginate(page, 50, error_out=True)
     return render_template("pages/index.html", pagination=pagination)
+
+
+@bp.route("/p/<int:id>")
+def show(id):
+    """Retorna as despesas de um político específico."""
+    page = request.args.get("page", 1, type=int)
+    p = Servidor.query.get_or_404(id)
+    query = Despesa.query.filter_by(servidor=p).order_by(Despesa.data.desc())
+    pagination = query.paginate(page, 50, error_out=True)
+    return render_template("pages/show.html", 
+                           parlamentar=p,
+                           pagination=pagination)

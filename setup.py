@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 requires = [
     'Flask',
@@ -12,10 +12,10 @@ requires = [
 
 
 setup(
-    name='vcvaipagar',
+    name='Gastos-Politicos',
     version='0.1',
     long_description=__doc__,
-    packages=['app'],
+    packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
     install_requires=requires,

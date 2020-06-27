@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% from 'shared/macros.html' import despesa, paginacao %}
+
+{% block content %}
+  <div class="row mt-4">
+    <aside class="col-md-3">
+      <section class="text-center">
+        <img class="parlamentar-foto" src="{{ parlamentar.url_foto }}" alt="{{ parlamentar.nome }}">
+        <h5>{{ parlamentar.nome }}</h5>
+      </section>
+    </aside>
+    <div class="col-md-9">
+      <h2>Últimas despesas de {{ parlamentar.nome }} {{ parlamentar.partido }}/{{ parlamentar.uf }}</h2>
+      <ul class="list-unstyled lista-despesas mt-3">
+        {% for desp in pagination.items %}
+        {{ despesa(desp) }}
+        {% endfor %}
+      </ul>
+      {{ paginacao(pagination, endpoint="pages.show", page_id=parlamentar.id) }}
+    </div>
+  </div>
+{% endblock %}

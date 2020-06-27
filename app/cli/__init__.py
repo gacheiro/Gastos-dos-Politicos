@@ -40,7 +40,7 @@ def fetch_desp(id):
         _despesas(id)
     else:
         for dep in [Servidor.query.get(204453), Servidor.query.get(74646)]:
-            print(f"Obetendo as despesas de {dep.nome}...")
+            print(f"Obtendo as despesas de {dep.nome}...")
             _despesas(dep.id)
     db.session.commit()
 
