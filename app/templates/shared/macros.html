@@ -4,7 +4,9 @@
          src="{{ desp.servidor.url_foto }}" alt="{{ desp.servidor.nome }}">
     <div class="media-body">
       <h5 class="mt-0">
-        {{ desp.servidor.nome }} <small>{{ desp.servidor.partido}}/{{ desp.servidor.uf }}</small>
+        <a href="{{ url_for('pages.show', id=desp.servidor.id)}}">
+          {{ desp.servidor.nome }}
+        </a> <small>{{ desp.servidor.partido}}/{{ desp.servidor.uf }}</small>
       </h5>
       <p>R$ {{ "{:.2f}".format(desp.valor) }} em {{ desp.data }} com {{ desp.tipo|title }}.</p>
     </div>

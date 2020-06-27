@@ -2,7 +2,7 @@
 {% from 'shared/macros.html' import despesa, paginacao %}
 
 {% block content %}
-  <div class="row mt-4">
+  <div class="row mt-3">
     <aside class="col-md-3">
       <section class="text-center">
         <img class="parlamentar-foto" src="{{ parlamentar.url_foto }}" alt="{{ parlamentar.nome }}">
@@ -11,11 +11,32 @@
     </aside>
     <div class="col-md-9">
       <h2>Últimas despesas de {{ parlamentar.nome }} {{ parlamentar.partido }}/{{ parlamentar.uf }}</h2>
-      <ul class="list-unstyled lista-despesas mt-3">
-        {% for desp in pagination.items %}
-        {{ despesa(desp) }}
-        {% endfor %}
-      </ul>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Valor</th>
+            <th>Tipo</th>
+            <th>Documento</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for desp in pagination.items %}
+            <tr id="{{ desp.id }}">
+              <td>{{ desp.data.strftime("%d/%m/%Y") }}</td>
+              <td>{{ "R$ {:.2f}".format(desp.valor).replace('.', ',') }}</td>
+              <td>{{ desp.tipo|title }}</td>
+              <td>
+                {% if desp.url_documento %}
+                <a href="{{ desp.url_documento}}" target="_blank"><strong>Nota Fiscal</strong></a>
+                {% else %}
+                  -
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
       {{ paginacao(pagination, endpoint="pages.show", page_id=parlamentar.id) }}
     </div>
   </div>

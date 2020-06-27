@@ -34,20 +34,29 @@ def fetch_deps():
 
 
 @click.option("--id", help="id do deputado.")
-def fetch_desp(id):
+@click.option("--ano", help="ano das despesas.")
+def fetch_desp(id, ano):
     """Popula o banco de dados com as últimas despesas dos deputados."""
+    if ano:
+        print(f"Obtendo despesas do ano {ano}")        
     if id:
-        _despesas(id)
+        _despesas(id, ano)
     else:
-        for dep in [Servidor.query.get(204453), Servidor.query.get(74646)]:
-            print(f"Obtendo as despesas de {dep.nome}...")
-            _despesas(dep.id)
+        for i, dep in enumerate(Servidor.query.order_by(Servidor.nome).all()):
+            print(f"{i} - [{dep.id}] Obtendo as despesas de {dep.nome}.")
+            _despesas(dep.id, ano)
     db.session.commit()
+    print("Atualização completa.")
 
 
-def _despesas(id):
-    dados = camara.despesas(id)
+def _despesas(id, ano):
+    dados = camara.despesas(id, ano=ano)
     for desp in dados:
+        # Algumas despesas têm dataDocumento=null, apenas ignore por enquanto
+        # TODO: reconstruir a data da despesa com o ano e o mês
+        if desp["dataDocumento"] is None:
+            print(f"Ignorando despesa sem data {desp['codDocumento']}")
+            continue
         d = Despesa(
             servidor_id=id,
             id=desp["codDocumento"],

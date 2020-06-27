@@ -7,8 +7,8 @@ load_dotenv()
 class Config:
     DEBUG = False
     TESTING = False    
-    APP_SECRET = os.environ['APP_SECRET']
-    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+    APP_SECRET = os.environ["APP_SECRET"]
+    SQLALCHEMY_DATABASE_URI = os.environ["DATABASE_URL"]
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
@@ -23,4 +23,4 @@ class DevelopmentConfig(Config):
 
 class TestingConfig(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
+    SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
