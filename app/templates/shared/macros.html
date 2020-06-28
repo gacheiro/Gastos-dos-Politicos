@@ -8,7 +8,7 @@
           {{ desp.servidor.nome }}
         </a> <small>{{ desp.servidor.partido}}/{{ desp.servidor.uf }}</small>
       </h5>
-      <p>R$ {{ "{:.2f}".format(desp.valor) }} em {{ desp.data }} com {{ desp.tipo|title }}.</p>
+      <p>R$ {{ "{:.2f}".format(desp.valor).replace('.', ',') }} em {{ desp.data }} com {{ desp.tipo|title }}.</p>
     </div>
   </li>
 {% endmacro %}

@@ -14,10 +14,12 @@ def deputados():
 
 # TODO: obeter também a paginação completa, 
 #       e não somente os primeiros 100 itens
-def despesas(deputado_id, ano=None):
+def despesas(deputado_id, mes=None, ano=None):
     """Retorna as despesas do deputado."""
     url = (f"{BASE_URL}/deputados/{deputado_id}/despesas?"
            "ordem=DESC&ordenarPor=dataDocumento&itens=100")
+    if mes is not None:
+        url += f"&mes={mes}"
     if ano is not None:
         url += f"&ano={ano}"
     r = requests.get(url, headers=HEADERS)

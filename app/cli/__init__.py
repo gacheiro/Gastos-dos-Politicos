@@ -16,7 +16,7 @@ def drop_db():
     db.drop_all()
 
 
-def fetch_deps():
+def obter_deputados():
     """Popula o banco de dados com os deputados da legislação atual."""
     dados = camara.deputados()
     for dep in dados:
@@ -34,23 +34,23 @@ def fetch_deps():
 
 
 @click.option("--id", help="id do deputado.")
+@click.option("--mes", help="mês das despesas.")
 @click.option("--ano", help="ano das despesas.")
-def fetch_desp(id, ano):
+def obter_despesas(id, ano, mes):
     """Popula o banco de dados com as últimas despesas dos deputados."""
-    if ano:
-        print(f"Obtendo despesas do ano {ano}")        
+    print(f"obter-despesas --id {id} --ano {ano} --mes {mes}")        
     if id:
-        _despesas(id, ano)
+        _fetch_desp(id, mes, ano)
     else:
         for i, dep in enumerate(Servidor.query.order_by(Servidor.nome).all()):
             print(f"{i} - [{dep.id}] Obtendo as despesas de {dep.nome}.")
-            _despesas(dep.id, ano)
+            _fetch_desp(dep.id, mes, ano)
     db.session.commit()
     print("Atualização completa.")
 
 
-def _despesas(id, ano):
-    dados = camara.despesas(id, ano=ano)
+def _fetch_desp(id, mes, ano):
+    dados = camara.despesas(id, mes=mes, ano=ano)
     for desp in dados:
         # Algumas despesas têm dataDocumento=null, apenas ignore por enquanto
         # TODO: reconstruir a data da despesa com o ano e o mês
@@ -73,5 +73,5 @@ def _despesas(id, ano):
 
 
 def init_app(app):
-    for command in (create_db, drop_db, fetch_deps, fetch_desp):
+    for command in (create_db, drop_db, obter_deputados, obter_despesas):
         app.cli.add_command(app.cli.command()(command))
