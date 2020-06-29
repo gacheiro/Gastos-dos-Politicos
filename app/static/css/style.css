@@ -1,0 +1,10 @@
+.foto-parlamentar {
+    width: 90px;
+    height: 90px;
+    overflow: hidden;
+}
+
+.foto-parlamentar img {
+    width: 90px;
+    height: 120px;
+}
