@@ -63,6 +63,8 @@ def _fetch_desp(id, mes, ano):
             tipo=desp["tipoDespesa"],
             tipo_documento=desp["tipoDocumento"],
             num_documento=desp["numDocumento"],
+            ano=desp["ano"],
+            mes=desp["mes"],
             data=datetime.strptime(desp["dataDocumento"], "%Y-%m-%d"),
             valor=desp["valorDocumento"],
             url_documento=desp["urlDocumento"],

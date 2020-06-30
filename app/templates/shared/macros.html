@@ -1,3 +1,8 @@
+{%- macro _fmt_valor(v) %}
+  {{ "{:.2f}".format(v).replace('.', ',') }}
+{%- endmacro %}
+
+
 {% macro despesa(desp) %}
   <li id="{{ desp.id }}" class="despesa media mb-2 bg-white">
     <div class="foto-parlamentar rounded-circle mr-3">
@@ -9,9 +14,31 @@
           {{ desp.servidor.nome }}
         </a> <small>{{ desp.servidor.partido}}/{{ desp.servidor.uf }}</small>
       </h5>
-      <p>R$ {{ "{:.2f}".format(desp.valor).replace('.', ',') }} em {{ desp.data }} com {{ desp.tipo|title }}.</p>
+      <p>R$ {{ _fmt_valor(desp.valor) }} em {{ desp.data }} com {{ desp.tipo|title }}.</p>
     </div>
   </li>
+{% endmacro %}
+
+
+{% macro navegacao(navigation, parlamentar) %}
+  {% set ano = 2020 %}
+  {% set nomes_meses = {
+    1: "Jan", 2: "Fev", 3: "Mar",
+    4: "Abr", 5: "Mai", 6: "Jun",
+    7: "Jul", 8: "Ago", 9: "Set",
+    10: "Out", 11: "Nov", 12: "Dez" }
+  %}
+
+  <ul class="nav nav-pills flex-column mt-2">
+    {%- for mes, gasto in navigation|sort(reverse=True) %}
+      <li class="nav-item">
+        {%- set url = url_for("pages.show", id=parlamentar.id, ano=ano, mes=mes) %}
+        <a class="nav-link {{ 'active' if request.args.get('mes') == mes|string else '' }}" href="{{ url }}">
+          <strong>{{ nomes_meses[mes] }} (R$ {{ _fmt_valor(gasto) }})</strong>
+        </a>
+      </li>
+    {%- endfor %}
+  </ul>
 {% endmacro %}
 
 
@@ -26,10 +53,14 @@
             </li>
           {% else %}
             <li class="page-item">
+              {# Reaplica os filtros presentes à url da paginação #}
+              {# atualizando o parâmetro `page` #}
+              {% set args = dict(request.args, page=page) %}
+
               {% if page_id %}
-                {% set url = url_for(endpoint, id=page_id, page=page) %}
+                {% set url = url_for(endpoint, id=page_id, **args) %}
               {% else %}
-                {% set url = url_for(endpoint, page=page) %}
+                {% set url = url_for(endpoint, **args) %}
               {% endif %}
               <a class="page-link" href="{{ url }}">{{ page }}</a>
             </li>
