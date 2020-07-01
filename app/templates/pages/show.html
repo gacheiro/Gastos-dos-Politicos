@@ -4,18 +4,20 @@
 {% block content %}
   <div class="row mt-3">
     <aside class="col-md-3 mt-3">
-      <section class="d-flex mb-3">
-        <div class="rounded-circle"
-         style="display:flex; width: 114px; height: 114px; overflow: hidden">
+      <section class="mb-3">
+        <div class="rounded-circle" style="width: 114px; height: 114px; overflow: hidden">
           <img src="{{ parlamentar.url_foto }}" alt="{{ parlamentar.nome }}"
-           style="width: 114px; height: 152px">
+               width="114px" height="152px">
         </div>
-        <h5 class="align-self-center">{{ parlamentar.nome }}<br>
-          <small>{{ parlamentar.partido }}/{{ parlamentar.uf }}</small></h5>
+        <h5>
+          {{ parlamentar.nome }}<br>
+          <small>{{ parlamentar.partido }}/{{ parlamentar.uf }}</small>
+        </h5>
       </section>
       <span><strong>Filtrar por mês</strong></span>
       {{ navegacao(navigation, parlamentar) }}
     </aside>
+
     <div class="col-md-9 mt-3">
       <h5>Últimas despesas de {{ parlamentar.nome }} {{ parlamentar.partido }}/{{ parlamentar.uf }}</h5>
       <div class="table-responsive">

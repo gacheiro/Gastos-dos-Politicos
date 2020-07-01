@@ -9,8 +9,8 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="744.09448819"
-   height="1052.3622047"
+   width="357.6846"
+   height="153.43863"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.5 r10040"
@@ -27,9 +27,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="235.56808"
-     inkscape:cy="511.30235"
+     inkscape:zoom="1.4"
+     inkscape:cx="90.367151"
+     inkscape:cy="57.182521"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -38,7 +38,11 @@
      inkscape:window-height="987"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
-     inkscape:window-maximized="1" />
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -55,9 +59,10 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="bg"
-     style="display:inline">
+     style="display:inline"
+     transform="translate(-214.71642,-385.18388)">
     <rect
-       style="fill:#ffff00;fill-opacity:1"
+       style="fill:#fac915;fill-opacity:1"
        id="rect3061"
        width="357.69128"
        height="151.6723"
@@ -73,11 +78,12 @@
      inkscape:label="name"
      inkscape:groupmode="layer"
      id="layer1"
-     style="display:inline">
+     style="display:inline;opacity:0.82"
+     transform="translate(-214.71642,-385.18388)">
     <text
        xml:space="preserve"
-       style="font-size:57.04362869px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Ink Free;-inkscape-font-specification:Ink Free"
-       x="241.54002"
+       style="font-size:60px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Ink Free;-inkscape-font-specification:Ink Free"
+       x="230.98438"
        y="428.95279"
        id="text2985"
        sodipodi:linespacing="125%"
@@ -87,15 +93,15 @@
        transform="scale(0.94736255,1.0555621)"><tspan
          sodipodi:role="line"
          id="tspan2987"
-         x="241.54002"
+         x="230.98438"
          y="428.95279">GASTOS DOS</tspan><tspan
          sodipodi:role="line"
-         x="241.54002"
-         y="500.25732"
+         x="230.98438"
+         y="503.95279"
          id="tspan2989" /></text>
     <text
        xml:space="preserve"
-       style="font-size:57.04362869px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Stencil;-inkscape-font-specification:Stencil"
+       style="font-size:57.04362868999999100px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Stencil;-inkscape-font-specification:Stencil"
        x="280.58002"
        y="493.05817"
        id="text2991"
