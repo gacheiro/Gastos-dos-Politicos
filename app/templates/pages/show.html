@@ -1,57 +1,49 @@
-{% extends 'base.html' %}
-{% from 'shared/macros.html' import despesa, paginacao, navegacao %}
+{% extends "base.html" %}
+{% from "shared/macros.html" import despesa, paginacao, navegacao %}
 
 {% block content %}
-  <div class="row mt-3">
-    <aside class="col-md-3 mt-3">
-      <section class="mb-3">
-        <div class="rounded-circle" style="width: 114px; height: 114px; overflow: hidden">
-          <img src="{{ parlamentar.url_foto }}" alt="{{ parlamentar.nome }}"
-               width="114px" height="152px">
-        </div>
+  <section class="row my-3">
+    <div class="col-md-3">
+      <div class="rounded-circle"
+        style="width: 114px; height: 114px; overflow: hidden; margin-left: auto; margin-right: auto;">
+          <img src="{{ parlamentar.url_foto }}" alt="{{ parlamentar.nome }}" width="114px" height="152px">
+      </div>
+      <span class="text-center">
         <h5>
           {{ parlamentar.nome }}<br>
           <small>{{ parlamentar.partido }}/{{ parlamentar.uf }}</small>
         </h5>
-      </section>
-      <span><strong>Filtrar por mês</strong></span>
-      {{ navegacao(navigation, parlamentar) }}
-    </aside>
-
-    <div class="col-md-9 mt-3">
-      <h5>Últimas despesas de {{ parlamentar.nome }} {{ parlamentar.partido }}/{{ parlamentar.uf }}</h5>
-      <div class="table-responsive">
-        <table class="table">
-
-          <thead>
-            <tr>
-              <th>Data</th>
-              <th>Valor</th>
-              <th>Tipo</th>
-              <th>Documento</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {% for desp in pagination.items %}
-              <tr id="{{ desp.id }}">
-                <td>{{ desp.data.strftime("%d/%m/%Y") }}</td>
-                <td>{{ "R$ {:.2f}".format(desp.valor).replace('.', ',') }}</td>
-                <td>{{ desp.tipo|title }}</td>
-                <td>
-                  {% if desp.url_documento %}
-                  <a href="{{ desp.url_documento}}" target="_blank"><strong>Nota Fiscal</strong></a>
-                  {% else %}
-                    -
-                  {% endif %}
-                </td>
-              </tr>
-            {% endfor %}
-          </tbody>
-
-        </table>
-      </div>
-      {{ paginacao(pagination, endpoint="pages.show", page_id=parlamentar.id) }}
+      </span>
     </div>
-  </div>
+    <div class="col-md-9 p-3">
+      {% include "pages/_filter_show.html" %}
+    </div>
+  </section>
+
+  <section class="bg-light p-2">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr><th>Data</th> <th>Valor</th> <th>Tipo</th> <th>Documento</th></tr>
+        </thead>
+        <tbody>
+        {%- for desp in pagination.items %}
+          <tr id="{{ desp.id }}">
+            <td>{{ desp.data.strftime("%d/%m/%Y") }}</td>
+              <td>{{ "R$ {:.2f}".format(desp.valor).replace('.', ',') }}</td>
+            <td>{{ desp.tipo|title }}</td>
+            <td>
+              {%- if desp.url_documento %}
+                <a href="{{ desp.url_documento}}" target="_blank"><strong>Nota Fiscal</strong></a>
+              {%- else %}
+                -
+              {%- endif %}
+            </td>
+          </tr>
+        {%- endfor %}
+        </tbody>
+      </table>
+    </div>
+    {{ paginacao(pagination, endpoint="pages.show", page_id=parlamentar.id) }}
+  </section>
 {% endblock %}
