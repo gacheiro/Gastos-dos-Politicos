@@ -7,7 +7,7 @@ load_dotenv()
 class Config:
     DEBUG = False
     TESTING = False    
-    APP_SECRET = os.environ["APP_SECRET"]
+    SECRET_KEY = os.environ["SECRET_KEY"]
     SQLALCHEMY_DATABASE_URI = os.environ["DATABASE_URL"]
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 

@@ -1,0 +1,17 @@
+<form action="{{ url_for('pages.show', id=parlamentar.id) }}" method="POST">
+  <div class="form-row">
+    {{ form.csrf_token }}
+    <div class="col form-group">
+      {{ form.ano(class="form-control") }}
+    </div>
+    <div class="col form-group">
+      {{ form.mes(class="form-control") }}
+    </div>
+    <div class="col-sm-6 form-group">
+      {{ form.tipo(class="form-control") }}
+    </div>
+  </div>
+  <div class="text-right">
+    <button type="submit" class="btn btn-primary btn-lg">Filtrar</button>
+  </div>
+</form>

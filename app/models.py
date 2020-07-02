@@ -11,6 +11,16 @@ class Servidor(db.Model):
     legislatura = db.Column(db.Integer, nullable=False)
     url_foto = db.Column(db.String(250), nullable=True)
 
+    def total_gasto(self, ano, mes=None):
+        """Retorna o total gasto de no `ano` e `mes` especificados.
+        Se `não` for especificado, então considera todos os meses."""
+        query = db.session.query(func.sum(Despesa.valor)) \
+                          .filter_by(servidor=self, ano=ano)
+        if mes is not None:
+            query = query.filter_by(mes=mes)
+        (total,) = query.first()      
+        return total
+    
     def despesas(self, ano=None, mes=None):
         """Retorna uma query com  despesas do parlamentar
         filtradas por ano e mes."""

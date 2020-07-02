@@ -2,7 +2,7 @@
 {% from "shared/macros.html" import despesa, paginacao, navegacao %}
 
 {% block content %}
-  <section class="row my-3">
+  <section class="row my-5">
     <div class="col-md-3">
       <div class="rounded-circle"
         style="width: 114px; height: 114px; overflow: hidden; margin-left: auto; margin-right: auto;">
@@ -15,8 +15,11 @@
         </h5>
       </span>
     </div>
-    <div class="col-md-9 p-3">
-      {% include "pages/_filter_show.html" %}
+    <div class="col-md-9">
+      <div class="mb-3 p-2 bg-light">
+        {% include "pages/_show_stats.html" %}
+      </div>
+      {% include "pages/_filter_show_form.html" %}
     </div>
   </section>
 
@@ -29,7 +32,7 @@
         <tbody>
         {%- for desp in pagination.items %}
           <tr id="{{ desp.id }}">
-            <td>{{ desp.data.strftime("%d/%m/%Y") }}</td>
+            <td>{{ desp.mes }}/{{ desp.ano }}</td>
               <td>{{ "R$ {:.2f}".format(desp.valor).replace('.', ',') }}</td>
             <td>{{ desp.tipo|title }}</td>
             <td>
