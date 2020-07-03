@@ -2,11 +2,12 @@
 {% set mes = request.args.get("mes") %}
 
 <div class="text-center" style="font-size: 1.25rem;">
-  <p>Em <span class="bg-warning px-1"><strong>
-    {%- if mes %}
-      {{ mes }}/
-    {%- endif -%}
-    {{ ano }}</strong></span>, 
-    gasto de <span class="bg-warning px-1"><strong>{{ parlamentar.nome }}</strong></span> com a cota parlamentar:</p>
-  <p><strong>R$ {{ parlamentar.total_gasto(ano, mes)|int }}</strong>.</p>
+  <p>Em <span class="bg-warning px-1">
+    <strong>
+      {%- if mes %}
+        {{ mes|month_abbr|upper }}/
+      {%- endif -%}
+      {{ ano }}</strong></span>, 
+    gasto de <span class="bg-warning px-1"><strong>{{ parlamentar.nome|upper }}</strong></span> com a cota parlamentar:</p>
+  <p><strong>{{ parlamentar.total_gasto(ano, mes)|currency }}</strong>.</p>
 </div>
