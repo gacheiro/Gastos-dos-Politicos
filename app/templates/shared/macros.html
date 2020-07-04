@@ -3,6 +3,14 @@
 {%- endmacro %}
 
 
+{% macro retrato(parlamentar) %}
+  <div class="retrato rounded-circle border border-warning">
+    <img src="{{ parlamentar.url_foto }}" alt="{{ parlamentar.nome }}"
+         width="114px" height="152px">
+  </div>
+{% endmacro %}
+
+
 {% macro despesa(desp) %}
   <li id="{{ desp.id }}" class="despesa media mb-2 bg-white">
     <div class="foto-parlamentar rounded-circle mr-3">

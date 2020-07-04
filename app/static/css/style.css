@@ -1,10 +1,23 @@
-.foto-parlamentar {
-    width: 90px;
-    height: 90px;
+.retrato {
+    width: 114px;
+    height: 114px;
+    margin-left: auto;
+    margin-right: auto;
     overflow: hidden;
 }
 
-.foto-parlamentar img {
-    width: 90px;
-    height: 120px;
+.stats {
+    background-color: #f8f9fa!important;
+    font-size: 1.25rem;
+}
+
+.nome-parlamentar {
+    font-size: 1.10rem;
+}
+
+.texto-destaque {
+    background-color: #ffc107!important;
+    padding-left: .25rem!important;
+    padding-right: .25rem!important;
+    font-weight: bold;
 }

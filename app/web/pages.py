@@ -11,7 +11,14 @@ def index():
     page = request.args.get("page", 1, type=int)
     query = Despesa.query.order_by(Despesa.data.desc())
     pagination = query.paginate(page, 50, error_out=True)
-    return render_template("pages/index.html", pagination=pagination)
+    total_gasto = Despesa.total_gasto()
+    quem_gastou_mais = Servidor.quem_gastou_mais()
+    quem_gastou_menos = Servidor.quem_gastou_menos()
+    return render_template("pages/index.html",
+                           pagination=pagination,
+                           total_gasto=total_gasto,
+                           quem_gastou_mais=quem_gastou_mais,
+                           quem_gastou_menos=quem_gastou_menos)
 
 
 @bp.route("/p/<int:id>", methods=["GET", "POST"])
@@ -36,7 +43,9 @@ def show(id):
 
     pagination = p.despesas(ano, mes).paginate(page, 50,
                                                error_out=True)
+    total_gasto = Despesa.total_gasto(p, ano=ano, mes=mes)
     return render_template("pages/show.html",
                            parlamentar=p,
                            pagination=pagination,
+                           total_gasto=total_gasto,
                            form=form)

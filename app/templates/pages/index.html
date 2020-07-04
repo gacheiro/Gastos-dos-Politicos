@@ -1,19 +1,19 @@
 {% extends "base.html" %}
-{% from "shared/macros.html" import despesa, paginacao %}
 
 {% block content %}
-  <div class="jumbotron-fluid" style="background-color: rgb(240, 240, 240)">
-    {% include "shared/_search_form.html" %}
-  </div>
-  <section class="mt-3">
-    <h2>Últimas despesas dos deputados da Câmara Federal</h2>
-    <div>
-      <ul class="list-unstyled lista-despesas">
-        {% for desp in pagination.items %}
-        {{ despesa(desp) }}
-        {% endfor %}
-      </ul>
-      {{ paginacao(pagination, endpoint="pages.index") }}
-    </div>
+  <section class="p-4 mb-4 bg-light">
+    {% include "shared/_stats.html" %}
+  </section>
+  <section class="stats p-4 mb-4">
+    <p>Quem gastou mais em <span class="texto-destaque">2020</span>:</p>
+    {% with rank = quem_gastou_mais %}
+      {% include "pages/_rank.html" %}
+    {% endwith %}
+  </section>
+  <section class="stats p-4">
+    <p>Quem gastou menos em <span class="texto-destaque">2020</span>:</p>
+    {% with rank = quem_gastou_menos %}
+      {% include "pages/_rank.html" %}
+    {% endwith %}
   </section>
 {% endblock %}

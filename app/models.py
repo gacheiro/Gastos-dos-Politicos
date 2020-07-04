@@ -1,4 +1,5 @@
-from sqlalchemy import func
+from sqlalchemy import func, desc
+
 from app.ext import db
 
 
@@ -11,6 +12,7 @@ class Servidor(db.Model):
     legislatura = db.Column(db.Integer, nullable=False)
     url_foto = db.Column(db.String(250), nullable=True)
 
+    '''
     def total_gasto(self, ano, mes=None):
         """Retorna o total gasto no `ano` e `mes` especificados.
         Se `mes` não for especificado, então considera todos os meses."""
@@ -20,7 +22,8 @@ class Servidor(db.Model):
             query = query.filter_by(mes=mes)
         (total,) = query.first()      
         return total
-    
+    '''
+
     def despesas(self, ano=None, mes=None):
         """Retorna uma query com despesas do parlamentar
         filtradas por ano e mes."""
@@ -32,14 +35,37 @@ class Servidor(db.Model):
         return query.order_by(Despesa.data.desc())
 
     def gastos_por_mes(self, ano):
-        """Retorna o valor gasto pelo parlamentar
-        agrupado por mes no ano dado."""
-        return db.session.query(Despesa.mes, func.sum(Despesa.valor)) \
-                         .filter_by(servidor=self, ano=ano)           \
-                         .group_by(Despesa.mes)                       \
-                         .all()
+        """Retorna uma lista de tuplas (mês, total_gasto) com os gastos
+        mensais do parlamentar."""
+        return db.session.query(
+                    Despesa.mes, func.sum(Despesa.valor)
+                ).filter_by(servidor=self, ano=ano).group_by(
+                    Despesa.mes
+                ).all()
 
-    
+    @staticmethod
+    def _total_gasto(ano, n):
+        return db.session.query(
+                    Servidor, func.sum(Despesa.valor).label('total')
+                ).join(Despesa).filter_by(ano=ano).group_by(
+                    Servidor.id
+                )
+
+    @staticmethod
+    def quem_gastou_mais(ano=2020, n=6):
+        """Retorna uma lista de `n` tuplas (Servidor, total_gasto)
+        com os parlamentares que mais gastaram."""
+        query = Servidor._total_gasto(ano, n)
+        return query.order_by(desc('total')).limit(n).all()
+
+    @staticmethod
+    def quem_gastou_menos(ano=2020, n=6):
+        """Retorna uma lista de `n` tuplas (Servidor, total_gasto)
+        com os parlamentares que menos gastaram."""
+        query = Servidor._total_gasto(ano, n)
+        return query.order_by('total').limit(n).all()
+
+
 class Despesa(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     servidor_id = db.Column(db.Integer, db.ForeignKey('servidor.id'),
@@ -56,3 +82,17 @@ class Despesa(db.Model):
     id_fornecedor = db.Column(db.String(20), nullable=False)
 
     servidor = db.relationship('Servidor')
+    
+    @staticmethod
+    def total_gasto(parlamentar=None, ano=None, mes=None):
+        """Retorna a soma de todos os gasto de acordo
+        com os filtros especificados."""
+        query = db.session.query(func.sum(Despesa.valor))
+        if parlamentar is not None:
+            query = query.filter_by(servidor=parlamentar)
+        if ano is not None:
+            query = query.filter_by(ano=ano)
+        if mes is not None:
+            query = query.filter_by(mes=mes)
+        (total,) = query.first()
+        return total
