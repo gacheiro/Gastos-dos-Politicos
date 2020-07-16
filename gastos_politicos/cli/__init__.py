@@ -2,7 +2,7 @@ from datetime import datetime
 
 import click
 
-from app.models import db, Servidor, Despesa
+from ..models import db, Servidor, Despesa
 from . import camara
 
 

@@ -1,6 +1,11 @@
 from sqlalchemy import func, desc
+from flask_sqlalchemy import SQLAlchemy
 
-from app.ext import db
+db = SQLAlchemy()
+
+
+def init_app(app):
+    db.init_app(app)
 
 
 class Servidor(db.Model):
@@ -95,4 +100,5 @@ class Despesa(db.Model):
         if mes is not None:
             query = query.filter_by(mes=mes)
         (total,) = query.first()
-        return total
+        # Retorna 0 caso o valor total seja None (banco de dados vazio)
+        return total or 0

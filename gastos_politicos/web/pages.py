@@ -1,6 +1,6 @@
 from flask import Blueprint, request, redirect, url_for, render_template
 
-from app.models import Servidor, Despesa
+from ..models import Servidor, Despesa
 from .forms import form_filtro_despesas
 
 bp = Blueprint("pages", __name__)

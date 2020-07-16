@@ -1,2 +1,2 @@
-recursive-include app/templates *
-recursive-include app/static *
+recursive-include gastos_politicos/templates *
+recursive-include gastos_politicos/static *
