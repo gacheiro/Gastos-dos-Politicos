@@ -8,7 +8,7 @@
   {% for parlamentar, total in rank %}
     <div class="col-sm-2 text-center">
       <a href="{{ url_for('pages.show', id=parlamentar.id) }}">
-        {{ retrato(parlamentar) }}
+        {{ retrato(parlamentar, com_gasto=total) }}
       </a>
       <span><strong class="nome-parlamentar">{{ parlamentar.nome }}</strong></span>
     </div>

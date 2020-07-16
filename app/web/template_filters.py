@@ -24,14 +24,21 @@ def month_abbr(month):
         return ''
 
 
-def currency(value, grouping=True, symbol=True):
-    """Formata um valor para moeda."""
+def currency(value, grouping=True, symbol=True, verbose=False):
+    """Formata um valor para moeda.
+       Use verbose=True para formatar o valor para um formato verboso:
+       114_999|currency => R$ 114.000 MIL
+       114_999|currency(verbose=True) => R$ 114 MIL
+    """
+    value = int(value)
+    if verbose:
+        suffix = ""
+        if value >= 1000:
+            value //= 1000
+            suffix = " MIL"
+        return f"R$ {value}{suffix}"
+
     try:
         return locale.currency(value, grouping=grouping, symbol=symbol)
     except (TypeError, ValueError):
         return ''
-
-
-def init_app(app):
-    for f in (month_name, month_abbr, currency):
-        app.add_template_filter(f)

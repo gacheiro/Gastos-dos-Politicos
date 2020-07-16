@@ -49,3 +49,8 @@ def show(id):
                            pagination=pagination,
                            total_gasto=total_gasto,
                            form=form)
+
+
+@bp.route("/sobre")
+def about():
+    return render_template("pages/about.html")
