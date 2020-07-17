@@ -1,6 +1,6 @@
 from flask import Blueprint, request, redirect, url_for, render_template
 
-from ..models import Servidor, Despesa
+from ..models import Politico, Reembolso
 from .forms import form_filtro_despesas
 
 bp = Blueprint("pages", __name__)
@@ -9,11 +9,11 @@ bp = Blueprint("pages", __name__)
 @bp.route("/")
 def index():
     page = request.args.get("page", 1, type=int)
-    query = Despesa.query.order_by(Despesa.data.desc())
+    query = Reembolso.query.order_by(Reembolso.data.desc())
     pagination = query.paginate(page, 50, error_out=True)
-    total_gasto = Despesa.total_gasto()
-    quem_gastou_mais = Servidor.quem_gastou_mais()
-    quem_gastou_menos = Servidor.quem_gastou_menos()
+    total_gasto = Reembolso.total_gasto()
+    quem_gastou_mais = Politico.ranking()
+    quem_gastou_menos = Politico.ranking(reverso=True)
     return render_template("pages/index.html",
                            pagination=pagination,
                            total_gasto=total_gasto,
@@ -24,7 +24,7 @@ def index():
 @bp.route("/p/<int:id>", methods=["GET", "POST"])
 def show(id):
     """Retorna as despesas de um parlamentar específico."""
-    p = Servidor.query.get_or_404(id)
+    p = Politico.query.get_or_404(id)
     # Aplica os filtros de mes, ano e a paginação
     mes, ano, tipo, page = (request.args.get("mes"),
                             request.args.get("ano", 2020, type=int),
@@ -43,7 +43,7 @@ def show(id):
 
     pagination = p.despesas(ano, mes).paginate(page, 50,
                                                error_out=True)
-    total_gasto = Despesa.total_gasto(p, ano=ano, mes=mes)
+    total_gasto = Reembolso.total_gasto(p, ano=ano, mes=mes)
     return render_template("pages/show.html",
                            parlamentar=p,
                            pagination=pagination,

@@ -2,7 +2,7 @@ from datetime import datetime
 
 import click
 
-from ..models import db, Servidor, Despesa
+from ..models import db, Politico, Reembolso
 from . import camara
 
 
@@ -20,7 +20,7 @@ def obter_deputados():
     """Popula o banco de dados com os deputados da legislação atual."""
     dados = camara.deputados()
     for dep in dados:
-        d = Servidor(
+        d = Politico(
             id=dep["id"],
             nome=dep["nome"],
             email=dep["email"],
@@ -33,7 +33,7 @@ def obter_deputados():
     db.session.commit()
 
 
-@click.option("--id", help="id do deputado.")
+@click.option("--id", help="id do politico.")
 @click.option("--mes", help="mês das despesas.")
 @click.option("--ano", help="ano das despesas.")
 def obter_despesas(id, ano, mes):
@@ -42,9 +42,10 @@ def obter_despesas(id, ano, mes):
     if id:
         _fetch_desp(id, mes, ano)
     else:
-        for i, dep in enumerate(Servidor.query.order_by(Servidor.nome).all()):
-            print(f"{i} - [{dep.id}] Obtendo as despesas de {dep.nome}.")
-            _fetch_desp(dep.id, mes, ano)
+        query = Politico.query.order_by(Politico.nome)
+        for i, p in enumerate(query.all(), 1):
+            print(f"{i} - [{p.id}] Obtendo as despesas de {p.nome}.")
+            _fetch_desp(p.id, mes, ano)
     db.session.commit()
     print("Atualização completa.")
 
@@ -57,8 +58,8 @@ def _fetch_desp(id, mes, ano):
         if desp["dataDocumento"] is None:
             print(f"Ignorando despesa sem data {desp['codDocumento']}")
             continue
-        d = Despesa(
-            servidor_id=id,
+        d = Reembolso(
+            politico_id=id,
             id=desp["codDocumento"],
             tipo=desp["tipoDespesa"],
             tipo_documento=desp["tipoDocumento"],
