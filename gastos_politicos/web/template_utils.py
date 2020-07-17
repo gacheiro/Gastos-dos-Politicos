@@ -27,7 +27,7 @@ def month_abbr(month):
 def currency(value, grouping=True, symbol=True, verbose=False):
     """Formata um valor para moeda.
        Use verbose=True para formatar o valor para um formato verboso:
-       114_999|currency => R$ 114.000 MIL
+       114_999|currency => R$ 114.000,00
        114_999|currency(verbose=True) => R$ 114 MIL
     """
     value = int(value)

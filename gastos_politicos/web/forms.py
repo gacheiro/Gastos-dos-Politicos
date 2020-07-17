@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import SelectField
 
-from .template_filters import month_name
+from .template_utils import month_name
 
 
 def form_filtro_despesas(parlamentar, ano):
