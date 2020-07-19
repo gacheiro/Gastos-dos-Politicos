@@ -10,13 +10,24 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <title>Gastos dos Políticos</title>
   </head>
-  <body style="background-color: rgb(240, 240, 240);">
-    {% include "_navbar.html" %}
-    <div class="container">
-      {% block content %}
-      {% endblock %}
+  <body>
+    <div id="page-container">
+      <div id="content-wrap">
+        <header>
+          {% include "_navbar.html" %}
+        </header>
+        <div class="container"">
+          {% block content %}
+          {% endblock %}
+        </div>
+      </div>
+      <footer id="footer" class="bg-light">
+        <div class="container">
+          {% include "_footer.html" %}
+        </div>
+      </footer>
     </div>
-
+    
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
