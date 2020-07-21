@@ -12,5 +12,7 @@
       </a>
       <span><strong class="nome-parlamentar">{{ parlamentar.nome }}</strong></span>
     </div>
+  {% else %}
+    <p class="text-muted">Ainda não há dados disponíveis.</p>
   {% endfor %}
 </div>
