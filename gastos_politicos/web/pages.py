@@ -8,14 +8,10 @@ bp = Blueprint("pages", __name__)
 
 @bp.route("/")
 def index():
-    page = request.args.get("page", 1, type=int)
-    query = Reembolso.query.order_by(Reembolso.data.desc())
-    pagination = query.paginate(page, 50, error_out=True)
     total_gasto = Reembolso.total_gasto()
     quem_gastou_mais = Politico.ranking()
     quem_gastou_menos = Politico.ranking(reverso=True)
     return render_template("pages/index.html",
-                           pagination=pagination,
                            total_gasto=total_gasto,
                            quem_gastou_mais=quem_gastou_mais,
                            quem_gastou_menos=quem_gastou_menos)

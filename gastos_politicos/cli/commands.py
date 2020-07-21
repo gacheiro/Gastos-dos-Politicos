@@ -1,4 +1,5 @@
 from datetime import datetime
+from pathlib import Path
 
 import click
 
@@ -38,7 +39,7 @@ def obter_deputados(fetch=deputados):
 @click.option("--ano", help="ano das despesas.")
 def obter_despesas(id, ano, mes, fetch=despesas):
     """Popula o banco de dados com as últimas despesas dos deputados."""
-    print(f"obter-despesas --id {id} --ano {ano} --mes {mes}")        
+    print(f"obter-despesas --id {id} --ano {ano} --mes {mes}")
     if id:
         _obter_despesas(id, mes, ano, fetch=despesas)
     else:
@@ -47,6 +48,8 @@ def obter_despesas(id, ano, mes, fetch=despesas):
             print(f"{i} - [{p.id}] Obtendo as despesas de {p.nome}.")
             _obter_despesas(p.id, mes, ano, fetch=despesas)
     db.session.commit()
+    # Reinicia o app para apagar as lru_cache's
+    Path("/var/www/thiagojobson_pythonanywhere_com_wsgi.py").touch(exist_ok=True)
     print("Atualização completa.")
 
 

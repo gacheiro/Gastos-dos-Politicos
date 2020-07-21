@@ -1,3 +1,5 @@
+from functools import lru_cache
+
 from sqlalchemy import func, desc
 from flask_sqlalchemy import SQLAlchemy
 
@@ -37,11 +39,13 @@ class Politico(db.Model):
         ).all()
 
     @staticmethod
+    @lru_cache()
     def ranking(ano=2020, n=6, reverso=False):
         """Retorna o ranking de `n` tuplas (Politico, total_gasto)
         com os parlamentares que mais gastaram. Passe reverso=True
         para retornar o ranking com os parlamentares que menos gastaram.
         """
+        print(f"Calculando o ranking{' reverso' if reverso else ''}...")
         query = db.session.query(
             Politico, func.sum(Reembolso.valor).label('total')
         ).join(Reembolso).filter_by(ano=ano).group_by(
@@ -53,7 +57,7 @@ class Politico(db.Model):
         else:
             query = query.order_by(desc('total'))
         return query.limit(n).all()
-        
+
 
 class Reembolso(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -71,8 +75,9 @@ class Reembolso(db.Model):
     id_fornecedor = db.Column(db.String(20), nullable=False)
 
     politico = db.relationship('Politico')
-    
+
     @staticmethod
+    @lru_cache()
     def total_gasto(politico=None, ano=None, mes=None):
         """Retorna a soma de todos os gasto de acordo
         com os filtros especificados."""
