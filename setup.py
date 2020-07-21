@@ -1,10 +1,9 @@
 from setuptools import setup, find_packages
 
-import gastos_politicos
 
 setup(
     name="Gastos-dos-Politicos",
-    version=gastos_politicos.__version__,
+    version="0.1.0.dev",
     description="Gastos dos políticos brasileiros.",
     author="Thiago J. Barbalho",
     license='GNU General Public License v3',
@@ -16,6 +15,7 @@ setup(
         "Flask>=1.1.2",
         "Flask-SQLAlchemy>=2.4.3",
         "Flask-WTF>=0.4.13",
+        "mysqlclient>=2.0.1",
         "pytest>=5.4.3",
         "python-dotenv>=0.13.0",
         "requests>=2.24.0",
