@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <section class="p-4 mb-4 bg-light">
+  <section class="p-4 my-4 bg-light">
     {% include "shared/_stats.html" %}
   </section>
   <section class="stats p-4 mb-4">
-    <p>Quem gastou mais em <span class="texto-destaque">2020</span>:</p>
+    <p>Quem mais gastou em <span class="texto-destaque">2020</span>:</p>
     {% with rank = quem_gastou_mais %}
       {% include "pages/_ranking.html" %}
     {% endwith %}
   </section>
-  <section class="stats p-4">
-    <p>Quem gastou menos em <span class="texto-destaque">2020</span>:</p>
+  <section class="stats p-4 mb-4">
+    <p>Quem menos gastou em <span class="texto-destaque">2020</span>:</p>
     {% with rank = quem_gastou_menos %}
       {% include "pages/_ranking.html" %}
     {% endwith %}

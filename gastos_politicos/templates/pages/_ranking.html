@@ -1,4 +1,4 @@
-{# Fragmento de html para renderizar o ranking de parlamentares 
+{# Fragmento de html para renderizar o ranking de parlamentares
    Usado no index em `Quem gastou mais`. `Quem gastou menos`
 #}
 
@@ -6,7 +6,7 @@
 
 <div class="row mt-4">
   {% for parlamentar, total in rank %}
-    <div class="col-sm-2 text-center">
+    <div class="col-sm-2 text-center mb-3">
       <a href="{{ url_for('pages.show', id=parlamentar.id) }}">
         {{ retrato(parlamentar, com_gasto=total) }}
       </a>
