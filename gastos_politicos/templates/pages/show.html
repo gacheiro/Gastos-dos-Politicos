@@ -32,8 +32,8 @@
         <tbody>
         {%- for desp in pagination.items %}
           <tr id="{{ desp.id }}">
-            <td>{{ desp.data }}</td>
-              <td>{{ desp.valor|currency }}</td>
+            <td>{{desp.data.day }}/{{ desp.data.month|month_abbr }}</td>
+            <td>{{ desp.valor|currency }}</td>
             <td>{{ desp.tipo|title }}</td>
             <td>
               {%- if desp.url_documento %}

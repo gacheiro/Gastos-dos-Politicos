@@ -4,16 +4,24 @@
   <section class="p-4 my-4 bg-light">
     {% include "shared/_stats.html" %}
   </section>
-  <section class="stats p-4 mb-4">
-    <p>Quem mais gastou em <span class="texto-destaque">2020</span>:</p>
-    {% with rank = quem_gastou_mais %}
-      {% include "pages/_ranking.html" %}
-    {% endwith %}
+  <section class="card stats mb-4">
+    <h5 class="card-header">
+      Quem mais gastou em <span class="texto-destaque">2020</span>
+    </h5>
+    <div class="card-body">
+      {% with rank = quem_gastou_mais %}
+        {% include "pages/_ranking.html" %}
+      {% endwith %}
+    </div>
   </section>
-  <section class="stats p-4 mb-4">
-    <p>Quem menos gastou em <span class="texto-destaque">2020</span>:</p>
-    {% with rank = quem_gastou_menos %}
-      {% include "pages/_ranking.html" %}
-    {% endwith %}
+  <section class="card stats mb-4">
+    <h5 class="card-header">
+      Quem menos gastou em <span class="texto-destaque">2020</span>
+    </h5>
+    <div class="card-body">
+      {% with rank = quem_gastou_menos %}
+        {% include "pages/_ranking.html" %}
+      {% endwith %}
+    </div>
   </section>
 {% endblock %}

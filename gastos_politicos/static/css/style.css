@@ -16,16 +16,16 @@
 }
 
 .retrato-wrapper {
-    width: 114px;
-    height: 114px;
+    width: 100px;
+    height: 100px;
     margin-left: auto;
     margin-right: auto;
     position: relative;
 }
 
 .retrato {
-    width: 114px;
-    height: 114px;
+    width: 100px;
+    height: 100px;
     overflow: hidden;
 }
 
@@ -38,6 +38,10 @@
 .stats {
     background-color: #f8f9fa!important;
     font-size: 1.25rem;
+}
+
+.table {
+    font-size: 0.85rem;
 }
 
 .nome-parlamentar {
