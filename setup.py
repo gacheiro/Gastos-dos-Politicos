@@ -13,6 +13,7 @@ setup(
     zip_safe=False,
     install_requires=[
         "Flask>=1.1.2",
+        "Flask-Caching>=1.9.0",
         "Flask-SQLAlchemy>=2.4.3",
         "Flask-WTF>=0.4.13",
         "mysqlclient>=2.0.1",

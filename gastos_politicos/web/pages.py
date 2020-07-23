@@ -1,5 +1,6 @@
 from flask import Blueprint, request, redirect, url_for, render_template
 
+from gastos_politicos.ext.cache import cache
 from ..models import Politico, Reembolso
 from .forms import form_filtro_despesas
 
@@ -7,6 +8,7 @@ bp = Blueprint("pages", __name__)
 
 
 @bp.route("/")
+@cache.cached() # Cache somente o index por enquanto
 def index():
     total_gasto = Reembolso.total_gasto()
     quem_gastou_mais = Politico.ranking()

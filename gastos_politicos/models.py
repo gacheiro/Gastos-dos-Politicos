@@ -1,5 +1,3 @@
-from functools import lru_cache
-
 from sqlalchemy import func, desc
 from flask_sqlalchemy import SQLAlchemy
 
@@ -39,7 +37,6 @@ class Politico(db.Model):
         ).all()
 
     @staticmethod
-    @lru_cache()
     def ranking(ano=2020, n=6, reverso=False):
         """Retorna o ranking de `n` tuplas (Politico, total_gasto)
         com os parlamentares que mais gastaram. Passe reverso=True
@@ -77,7 +74,6 @@ class Reembolso(db.Model):
     politico = db.relationship('Politico')
 
     @staticmethod
-    @lru_cache()
     def total_gasto(politico=None, ano=None, mes=None):
         """Retorna a soma de todos os gasto de acordo
         com os filtros especificados."""
