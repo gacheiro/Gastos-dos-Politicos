@@ -58,7 +58,7 @@ class Politico(db.Model):
 
 class Reembolso(db.Model):
     cod_documento = db.Column(db.Integer, primary_key=True)
-    num_documento = db.Column(db.Integer, primary_key=True)
+    num_documento = db.Column(db.String(20), primary_key=True)
     politico_id = db.Column(db.Integer, db.ForeignKey('politico.id'),
                             nullable=False)
     tipo = db.Column(db.String(250), nullable=False)
