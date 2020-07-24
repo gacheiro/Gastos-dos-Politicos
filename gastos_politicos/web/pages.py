@@ -1,4 +1,5 @@
-from flask import Blueprint, request, redirect, url_for, render_template
+from flask import (Blueprint, current_app, request,
+                   redirect, url_for, render_template)
 
 from gastos_politicos.ext.cache import cache
 from ..models import Politico, Reembolso
@@ -10,13 +11,14 @@ bp = Blueprint("pages", __name__)
 @bp.route("/")
 @cache.cached() # Cache somente o index por enquanto
 def index():
-    total_gasto = Reembolso.total_gasto()
-    quem_gastou_mais = Politico.ranking()
-    quem_gastou_menos = Politico.ranking(reverso=True)
-    return render_template("pages/index.html",
-                           total_gasto=total_gasto,
-                           quem_gastou_mais=quem_gastou_mais,
-                           quem_gastou_menos=quem_gastou_menos)
+    curr_month, curr_year = (current_app.config["CURRENT_MONTH"],
+                             current_app.config["CURRENT_YEAR"])
+    queries = {
+        "total_gasto": Reembolso.total_gasto(ano=curr_year),
+        "gastou_mais_mes": Politico.ranking(ano=curr_year, mes=curr_month),
+        "gastou_mais": Politico.ranking(ano=curr_year),
+    }
+    return render_template("pages/index.html", **queries)
 
 
 @bp.route("/p/<int:id>", methods=["GET", "POST"])

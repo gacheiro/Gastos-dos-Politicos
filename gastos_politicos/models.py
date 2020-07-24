@@ -37,15 +37,19 @@ class Politico(db.Model):
         ).all()
 
     @staticmethod
-    def ranking(ano=2020, n=6, reverso=False):
+    def ranking(mes=None, ano=2020, n=6, reverso=False):
         """Retorna o ranking de `n` tuplas (Politico, total_gasto)
         com os parlamentares que mais gastaram. Passe reverso=True
         para retornar o ranking com os parlamentares que menos gastaram.
         """
-        print(f"Calculando o ranking{' reverso' if reverso else ''}...")
         query = db.session.query(
             Politico, func.sum(Reembolso.valor_liquido).label('total')
-        ).join(Reembolso).filter_by(ano=ano).group_by(
+        ).join(Reembolso)
+        # Aplica o filtro de mês (opcional)
+        if mes is not None:
+            query = query.filter_by(mes=mes)
+        # Aplica o filtro de ano
+        query = query.filter_by(ano=ano).group_by(
             Politico.id
         )
         # Ordena por quem gastou mais ou gastou menos

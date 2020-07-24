@@ -1,25 +1,28 @@
 {% extends "base.html" %}
 
+{% set mes = config["CURRENT_MONTH"] %}
+{% set ano = config["CURRENT_YEAR"] %}
+
 {% block content %}
   <section class="p-4 my-4 bg-light">
     {% include "shared/_stats.html" %}
   </section>
   <section class="card stats mb-4">
     <h5 class="card-header">
-      Quem mais gastou em <span class="texto-destaque">2020</span>
+      Quem mais gastou em <span class="texto-destaque">{{ mes|month_abbr|upper }}/{{ ano }}</span>
     </h5>
     <div class="card-body">
-      {% with rank = quem_gastou_mais %}
+      {% with rank = gastou_mais_mes %}
         {% include "pages/_ranking.html" %}
       {% endwith %}
     </div>
   </section>
   <section class="card stats mb-4">
     <h5 class="card-header">
-      Quem menos gastou em <span class="texto-destaque">2020</span>
+      Quem mais gastou em <span class="texto-destaque">{{ ano }}</span>
     </h5>
     <div class="card-body">
-      {% with rank = quem_gastou_menos %}
+      {% with rank = gastou_mais %}
         {% include "pages/_ranking.html" %}
       {% endwith %}
     </div>
