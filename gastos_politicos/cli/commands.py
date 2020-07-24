@@ -56,18 +56,19 @@ def _obter_despesas(id, mes, ano, fetch=despesas):
         # Algumas despesas têm dataDocumento=null, apenas ignore por enquanto
         # TODO: reconstruir a data da despesa com o ano e o mês
         if desp["dataDocumento"] is None:
-            print(f"Ignorando despesa sem data {desp['codDocumento']}")
+            print(f"Ignorando despesa sem data R$ {desp['valorLiquido']}")
             continue
         d = Reembolso(
             politico_id=id,
-            id=desp["codDocumento"],
-            tipo=desp["tipoDespesa"],
-            tipo_documento=desp["tipoDocumento"],
+            cod_documento=desp["codDocumento"],
             num_documento=desp["numDocumento"],
+            tipo_documento=desp["tipoDocumento"],
+            tipo=desp["tipoDespesa"],
             ano=desp["ano"],
             mes=desp["mes"],
             data=datetime.strptime(desp["dataDocumento"], "%Y-%m-%d"),
             valor=desp["valorDocumento"],
+            valor_liquido=desp["valorLiquido"],
             url_documento=desp["urlDocumento"],
             nome_fornecedor=desp["nomeFornecedor"],
             id_fornecedor=desp["cnpjCpfFornecedor"],

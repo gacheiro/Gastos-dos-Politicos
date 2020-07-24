@@ -31,7 +31,7 @@ class Politico(db.Model):
         """Retorna uma lista de tuplas (mês, total_gasto) com os gastos
         mensais do parlamentar."""
         return db.session.query(
-            Reembolso.mes, func.sum(Reembolso.valor)
+            Reembolso.mes, func.sum(Reembolso.valor_liquido)
         ).filter_by(politico=self, ano=ano).group_by(
             Reembolso.mes
         ).all()
@@ -44,7 +44,7 @@ class Politico(db.Model):
         """
         print(f"Calculando o ranking{' reverso' if reverso else ''}...")
         query = db.session.query(
-            Politico, func.sum(Reembolso.valor).label('total')
+            Politico, func.sum(Reembolso.valor_liquido).label('total')
         ).join(Reembolso).filter_by(ano=ano).group_by(
             Politico.id
         )
@@ -57,7 +57,8 @@ class Politico(db.Model):
 
 
 class Reembolso(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    cod_documento = db.Column(db.Integer, primary_key=True)
+    num_documento = db.Column(db.Integer, primary_key=True)
     politico_id = db.Column(db.Integer, db.ForeignKey('politico.id'),
                             nullable=False)
     tipo = db.Column(db.String(250), nullable=False)
@@ -65,8 +66,8 @@ class Reembolso(db.Model):
     mes = db.Column(db.Integer, nullable=False)
     ano = db.Column(db.Integer, nullable=False)
     data = db.Column(db.Date, nullable=False)
-    num_documento = db.Column(db.Integer, nullable=False)
     valor = db.Column(db.Numeric, nullable=False)
+    valor_liquido = db.Column(db.Numeric, nullable=False)
     url_documento = db.Column(db.String(250), nullable=True)
     nome_fornecedor = db.Column(db.String(250), nullable=False)
     id_fornecedor = db.Column(db.String(20), nullable=False)
@@ -77,7 +78,7 @@ class Reembolso(db.Model):
     def total_gasto(politico=None, ano=None, mes=None):
         """Retorna a soma de todos os gasto de acordo
         com os filtros especificados."""
-        query = db.session.query(func.sum(Reembolso.valor))
+        query = db.session.query(func.sum(Reembolso.valor_liquido))
         if politico is not None:
             query = query.filter_by(politico=politico)
         if ano is not None:
