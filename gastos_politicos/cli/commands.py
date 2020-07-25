@@ -1,6 +1,7 @@
 from datetime import datetime
 
 import click
+import sqlalchemy
 
 from gastos_politicos.models import db, Politico, Reembolso
 from .dados_abertos import deputados, despesas
@@ -29,8 +30,7 @@ def obter_deputados(fetch=deputados):
             legislatura=dep["idLegislatura"],
             url_foto=dep["urlFoto"],
         )
-        db.session.merge(d)
-    db.session.commit()
+        _commit(d)
 
 
 @click.option("--id", help="id do politico.")
@@ -46,7 +46,6 @@ def obter_despesas(id, ano, mes, fetch=despesas):
         for i, p in enumerate(query.all(), 1):
             print(f"{i} - [{p.id}] Obtendo as despesas de {p.nome}.")
             _obter_despesas(p.id, mes, ano, fetch=despesas)
-    db.session.commit()
     print("Atualização completa.")
 
 
@@ -73,4 +72,24 @@ def _obter_despesas(id, mes, ano, fetch=despesas):
             nome_fornecedor=desp["nomeFornecedor"],
             id_fornecedor=desp["cnpjCpfFornecedor"],
         )
-        db.session.merge(d)
+        _commit(d)
+
+
+def _commit(obj, ignore=False):
+    """Insere o obj no banco de dados se não existir ainda."""
+    try:
+        db.session.add(obj)
+        db.session.commit()
+    except sqlalchemy.exc.IntegrityError as e:
+        db.session.rollback()
+        if "Duplicate entry" not in str(e):
+            raise e
+    #    reason = e.message
+    #    logger.warning(reason)
+
+    #    if not ignore:
+    #        raise e
+
+    #    if "Duplicate entry" in reason:
+    #        logger.info("%s already in table." % e.params[0])
+    #        print(f"{e.params[0]} already in table.")
