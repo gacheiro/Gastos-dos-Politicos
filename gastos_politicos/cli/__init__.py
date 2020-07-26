@@ -1,6 +1,14 @@
-from .commands import create_db, drop_db, obter_deputados, obter_despesas
+from .commands import (create_db, drop_db, clear_cache,
+                       obter_deputados, obter_despesas)
 
+commands = [
+    create_db,
+    drop_db,
+    clear_cache,
+    obter_deputados,
+    obter_despesas,
+]
 
 def init_app(app):
-    for command in (create_db, drop_db, obter_deputados, obter_despesas):
+    for command in commands:
         app.cli.add_command(app.cli.command()(command))

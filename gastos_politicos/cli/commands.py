@@ -3,6 +3,7 @@ from datetime import datetime
 import click
 import sqlalchemy
 
+from gastos_politicos.ext.cache import cache
 from gastos_politicos.models import db, Politico, Reembolso
 from .dados_abertos import deputados, despesas
 
@@ -15,6 +16,11 @@ def create_db():
 def drop_db():
     """Deleta as tabelas do banco de dados."""
     db.drop_all()
+
+
+def clear_cache():
+    """Limpa todos os dados da cache."""
+    cache.clear()
 
 
 def obter_deputados(fetch=deputados):
@@ -82,8 +88,10 @@ def _commit(obj, ignore=False):
         db.session.commit()
     except sqlalchemy.exc.IntegrityError as e:
         db.session.rollback()
-        if "Duplicate entry" not in str(e):
-            raise e
+        # Ignora a exception se for erro de chave primária duplicada
+        if ("Duplicate entry" not in str(e)                 # Mysql
+            and "UNIQUE constraint failed" not in str(e)):  # Sqlite
+                raise e
     #    reason = e.message
     #    logger.warning(reason)
 
