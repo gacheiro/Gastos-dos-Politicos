@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "shared/macros.html" import despesa, paginacao, navegacao %}
+{% from "shared/macros.html" import paginate %}
 
 {% block content %}
   <section class="row my-5">
@@ -23,8 +23,8 @@
     </div>
   </section>
 
-  <section class="bg-light p-2">
-    <div class="table-responsive">
+  <section class="bg-light p-2 mb-3">
+    <div class="table-responsive mb-3">
       <table class="table table-striped">
         <thead>
           <tr><th>Data</th> <th>Valor</th> <th>Tipo</th> <th>Documento</th></tr>
@@ -34,10 +34,10 @@
           <tr id="{{ desp.id }}">
             <td>{{desp.data.day }}/{{ desp.data.month|month_abbr }}</td>
             <td>{{ desp.valor|currency }}</td>
-            <td>{{ desp.tipo|title }}</td>
+            <td>{{ desp.tipo.rstrip(".")|capitalize }}</td>
             <td>
               {%- if desp.url_documento %}
-                <a href="{{ desp.url_documento}}" target="_blank"><strong>Nota Fiscal</strong></a>
+                <a href="{{ desp.url_documento }}" target="_blank"><strong>Nota Fiscal</strong></a>
               {%- else %}
                 -
               {%- endif %}
@@ -49,6 +49,6 @@
         </tbody>
       </table>
     </div>
-    {{ paginacao(pagination, endpoint="pages.show", page_id=parlamentar.id) }}
+    {{ paginate(pagination, endpoint="pages.show", page_id=parlamentar.id) }}
   </section>
 {% endblock %}

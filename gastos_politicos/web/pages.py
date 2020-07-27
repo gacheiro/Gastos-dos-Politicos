@@ -41,7 +41,7 @@ def show(id):
         params.pop("csrf_token")
         return redirect(url_for("pages.show", id=id, **params))
 
-    pagination = p.despesas(ano, mes).paginate(page, 50,
+    pagination = p.despesas(ano, mes).paginate(page, 40,
                                                error_out=True)
     total_gasto = Reembolso.total_gasto(p, ano=ano, mes=mes)
     return render_template("pages/show.html",

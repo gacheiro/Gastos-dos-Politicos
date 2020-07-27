@@ -12,27 +12,10 @@
 {% endmacro %}
 
 
-{% macro despesa(desp) %}
-  <li id="{{ desp.id }}" class="despesa media mb-2 bg-white">
-    <div class="foto-parlamentar rounded-circle mr-3">
-      <img src="{{ desp.servidor.url_foto }}" alt="{{ desp.servidor.nome }}">
-    </div>
-    <div class="media-body">
-      <h5 class="mt-0">
-        <a href="{{ url_for('pages.show', id=desp.servidor.id)}}">
-          {{ desp.servidor.nome }}
-        </a> <small>{{ desp.servidor.partido}}/{{ desp.servidor.uf }}</small>
-      </h5>
-      <p>R$ {{ _fmt_valor(desp.valor) }} em {{ desp.data }} com {{ desp.tipo|title }}.</p>
-    </div>
-  </li>
-{% endmacro %}
-
-
 {% macro paginacao(pagination, endpoint, page_id=None) %}
   <nav aria-label="Paginação">
-    <ul class="pagination pagination-lg justify-content-end">
-      {% for page in pagination.iter_pages() %}
+    <ul class="pagination pagination justify-content-end">
+      {% for page in pagination.iter_pages(2, 2, 2, 2) %}
         {% if page %}
           {% if page == pagination.page %}
             <li class="page-item active">
@@ -52,8 +35,33 @@
               <a class="page-link" href="{{ url }}">{{ page }}</a>
             </li>
           {% endif %}
+        {% else %}
+          <li class="page-item disabled">
+            <span class="page-link">...</<span></li>
         {% endif %}
       {% endfor %}
+    </ul>
+  </nav>
+{% endmacro %}
+
+
+{% macro paginate(pagination, endpoint, page_id=None) %}
+  <nav aria-label="Paginação">
+    {# Reaplica os filtros presentes à url da paginação #}
+    {# atualizando o parâmetro `page` #}
+    {% set pargs = dict(request.args, id=page_id, page=pagination.prev_num) %}
+    {% set nargs = dict(request.args, id=page_id, page=pagination.next_num) %}
+    <ul class="pagination pagination justify-content-end">
+      <li class="page-item {% if not pagination.has_prev %} disabled {% endif %}">
+        <a class="page-link" href="{{ url_for(endpoint, **pargs) }}">
+          &laquo; Anterior
+        </a>
+      </li>
+      <li class="page-item {% if not pagination.has_next %} disabled {% endif %}">
+        <a class="page-link" href="{{ url_for(endpoint, **nargs) }}">
+          Próxima &raquo;
+        </a>
+      </li>
     </ul>
   </nav>
 {% endmacro %}
