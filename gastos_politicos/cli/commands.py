@@ -21,6 +21,7 @@ def drop_db():
 def clear_cache():
     """Limpa todos os dados da cache."""
     cache.clear()
+    print("Cache clear.")
 
 
 def obter_deputados(fetch=deputados):
