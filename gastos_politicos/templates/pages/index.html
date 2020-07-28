@@ -3,11 +3,19 @@
 {% set mes = config["CURRENT_MONTH"] %}
 {% set ano = config["CURRENT_YEAR"] %}
 
+{% block head %}
+  <script type="text/javascript" src="{{ url_for('static', filename='js/autocomplete.js') }}">
+  </script>
+{% endblock %}
+
 {% block content %}
   <section class="p-4 my-4 bg-light">
     {% include "shared/_stats.html" %}
+    <div class="search-form pt-5">
+      {% include "pages/_search_form.html" %}
+    </div>
   </section>
-  <section class="card stats mb-4">
+  <section class="card stats my-4">
     <h5 class="card-header">
       Quem mais gastou em <span class="texto-destaque">{{ mes|month_abbr|upper }}/{{ ano }}</span>
     </h5>
@@ -27,4 +35,11 @@
       {% endwith %}
     </div>
   </section>
+{% endblock %}
+
+{% block script %}
+  {% autoescape false %}
+    let politicos = {{ politicos|map(attribute="nome")|list }}
+  {% endautoescape %}
+  autocomplete(document.getElementById("search"), politicos);
 {% endblock %}

@@ -12,8 +12,9 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # Flask-Caching
-    CACHE_TYPE = os.environ.get("CACHE_TYPE", "simple")
-    
+    # Desativa o cache por padrão quando não estiver em produção
+    CACHE_TYPE = os.environ.get("CACHE_TYPE", "null")
+
     CURRENT_MONTH = os.environ["CURRENT_MONTH"]
     CURRENT_YEAR = os.environ["CURRENT_YEAR"]
 
@@ -22,6 +23,7 @@ class ProductionConfig(Config):
     DEBUG = False
     SQLALCHEMY_POOL_RECYCLE = int(os.environ.get("SQLALCHEMY_POOL_RECYCLE", 299))
     SQLALCHEMY_POOL_TIMEOUT = int(os.environ.get("SQLALCHEMY_POOL_TIMEOUT", 20))
+    CACHE_TYPE = os.environ.get("CACHE_TYPE", "simple")
 
 
 class DevelopmentConfig(Config):

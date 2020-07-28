@@ -34,6 +34,9 @@
           <tr id="{{ desp.id }}">
             <td>{{desp.data.day }}/{{ desp.data.month|month_abbr }}</td>
             <td>{{ desp.valor|currency }}</td>
+            {# Normaliza a descrição da despesa.                #
+             # TODO: isso daqui provavelmente deve ser tratado  #
+             # antes de salvar os dados no banco.               #}
             <td>{{ desp.tipo.rstrip(".")|capitalize }}</td>
             <td>
               {%- if desp.url_documento %}

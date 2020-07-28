@@ -11,14 +11,27 @@ bp = Blueprint("pages", __name__)
 @bp.route("/")
 @cache.cached() # Cache somente o index por enquanto
 def index():
+    """Retorna o index do site."""
     curr_month, curr_year = (current_app.config["CURRENT_MONTH"],
                              current_app.config["CURRENT_YEAR"])
     queries = {
         "total_gasto": Reembolso.total_gasto(ano=curr_year),
         "gastou_mais_mes": Politico.ranking(ano=curr_year, mes=curr_month),
         "gastou_mais": Politico.ranking(ano=curr_year),
+        # Seleciona todos o politicos para usar no autocomplete
+        "politicos": Politico.query.all(),
     }
     return render_template("pages/index.html", **queries)
+
+
+@bp.route("/search", methods=["POST"])
+def search():
+    """Busca um politico pelo nome."""
+    nome = request.form["nome"]
+    p = Politico.query.filter_by(nome=nome).first()
+    if p is None:
+        return redirect(url_for("pages.index"))
+    return redirect(url_for("pages.show", id=p.id))
 
 
 @bp.route("/p/<int:id>", methods=["GET", "POST"])
