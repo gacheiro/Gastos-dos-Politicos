@@ -1,14 +1,8 @@
-<!--form action="{{ url_for('pages.search') }}" method="POST" autocomplete="off">
-  <div class="autocomplete" style="width: 300px;">
-    <input id="search" type="text" name="nome" placeholder="Nome">
-  </div>
-  <input type="submit" value="Buscar">
-</form-->
-
 <form action="{{ url_for('pages.search') }}" method="POST" autocomplete="off">
   <div class="input-group mb-3 justify-content-center">
     <div class="autocomplete">
-      <input id="search" type="text" class="form-control" name="nome" placeholder="Nome">
+      <input id="search" type="text" class="form-control" name="nome"
+             placeholder="Buscar politico">
     </div>
     <div class="input-group-append">
       <button class="btn btn-primary" type="submit">Buscar</button>

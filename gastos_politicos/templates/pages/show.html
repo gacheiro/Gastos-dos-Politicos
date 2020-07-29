@@ -4,6 +4,7 @@
 {% block content %}
   <section class="row my-5">
     <div class="col-md-3">
+      {# TODO: usar o macro `retrato` #}
       <div class="rounded-circle"
         style="width: 114px; height: 114px; overflow: hidden; margin-left: auto; margin-right: auto;">
           <img src="{{ parlamentar.url_foto }}" alt="{{ parlamentar.nome }}" width="114px" height="152px">
@@ -31,7 +32,7 @@
         </thead>
         <tbody>
         {%- for desp in pagination.items %}
-          <tr id="{{ desp.id }}">
+          <tr id="{{ desp.cod_documento }}-{{ desp.num_documento }}">
             <td>{{desp.data.day }}/{{ desp.data.month|month_abbr }}</td>
             <td>{{ desp.valor|currency }}</td>
             {# Normaliza a descrição da despesa.                #
