@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import SelectField, TextAreaField
-from wtforms.fields.html5 import EmailField
+from wtforms.fields.html5 import EmailField, SearchField
 from wtforms.validators import InputRequired, Length
 
 from .template_utils import month_name
@@ -27,6 +27,18 @@ class FiltroDespesasForm(FlaskForm):
     ], validate_choice=False)
     tipo = SelectField("Tipo", choices=[
         ("", "Todos os tipos"),
+    ])
+
+
+class BuscaPoliticoForm(FlaskForm):
+    """Formulário para buscar um político específico."""
+
+    class Meta:
+        """Desativa o csrf_token."""
+        csrf = False
+
+    nome = SearchField("Nome", validators=[
+        InputRequired(), Length(max=100),
     ])
 
 

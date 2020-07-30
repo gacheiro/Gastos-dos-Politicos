@@ -3,7 +3,7 @@ from flask import (Blueprint, current_app, request,
 
 from gastos_politicos.ext.cache import cache
 from gastos_politicos.models import db, Politico, Reembolso, Feedback
-from .forms import form_filtro_despesas, FeedbackForm
+from .forms import form_filtro_despesas, BuscaPoliticoForm, FeedbackForm
 
 bp = Blueprint("pages", __name__)
 
@@ -14,24 +14,28 @@ def index():
     """Retorna o index do site."""
     curr_month, curr_year = (current_app.config["CURRENT_MONTH"],
                              current_app.config["CURRENT_YEAR"])
-    queries = {
+    kwargs = {
         "total_gasto": Reembolso.total_gasto(ano=curr_year),
         "gastou_mais_mes": Politico.ranking(ano=curr_year, mes=curr_month),
         "gastou_mais": Politico.ranking(ano=curr_year),
         # Seleciona todos o politicos para usar no autocomplete
         "politicos": Politico.query.all(),
+        # Formulário para buscar um político específico
+        "form": BuscaPoliticoForm(),
     }
-    return render_template("pages/index.html", **queries)
+    return render_template("pages/index.html", **kwargs)
 
 
 @bp.route("/search", methods=["POST"])
 def search():
-    """Busca um politico pelo nome."""
-    nome = request.form["nome"]
-    p = Politico.query.filter_by(nome=nome).first()
-    if p is None:
-        return redirect(url_for("pages.index"))
-    return redirect(url_for("pages.show", id=p.id))
+    """Busca um politico pelo nome exatamente equivalente.
+    Isto é ok porque os nomes são gerados pelo autocomplete."""
+    form = BuscaPoliticoForm()
+    if form.validate_on_submit():
+        p = Politico.query.filter_by(nome=form.nome.data).first()
+        if p is not None:
+            return redirect(url_for("pages.show", id=p.id))
+    return redirect(url_for("pages.index"))
 
 
 @bp.route("/p/<int:id>", methods=["GET", "POST"])
