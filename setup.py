@@ -6,7 +6,6 @@ setup(
     version="0.1.0.dev",
     description="Gastos dos políticos brasileiros.",
     author="Thiago J. Barbalho",
-    license='GNU General Public License v3',
     long_description=__doc__,
     packages=find_packages(),
     include_package_data=True,

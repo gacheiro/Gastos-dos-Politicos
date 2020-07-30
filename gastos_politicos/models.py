@@ -95,3 +95,9 @@ class Reembolso(db.Model):
         (total,) = query.first()
         # Retorna 0 caso o valor total seja None (banco de dados vazio)
         return total or 0
+
+
+class Feedback(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(100), nullable=False)
+    feedback = db.Column(db.Text(500), nullable=False)

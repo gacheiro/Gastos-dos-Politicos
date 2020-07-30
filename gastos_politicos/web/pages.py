@@ -2,8 +2,8 @@ from flask import (Blueprint, current_app, request,
                    redirect, url_for, render_template)
 
 from gastos_politicos.ext.cache import cache
-from ..models import Politico, Reembolso
-from .forms import form_filtro_despesas
+from gastos_politicos.models import db, Politico, Reembolso, Feedback
+from .forms import form_filtro_despesas, FeedbackForm
 
 bp = Blueprint("pages", __name__)
 
@@ -66,4 +66,19 @@ def show(id):
 
 @bp.route("/sobre")
 def about():
-    return render_template("pages/about.html")
+    form = FeedbackForm()
+    return render_template("pages/about.html", form=form)
+
+
+@bp.route("/feedback", methods=["POST"])
+def feedback():
+    """Cria um novo feedback."""
+    form = FeedbackForm()
+    if form.validate_on_submit():
+        fb = Feedback(email=form.email.data,
+                      feedback=form.feedback.data)
+        db.session.add(fb)
+        db.session.commit()
+        # TODO: retornar uma flash message também
+        return redirect(url_for("pages.about"))
+    return render_template("pages/about.html", form=form)

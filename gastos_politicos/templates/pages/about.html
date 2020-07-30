@@ -3,7 +3,26 @@
 
 {% block content %}
   <div class="container">
-    <section class="card">
+    <section class="card my-3">
+      <h5 class="card-header">Sobre o projeto</h5>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <p>O <span class="texto-destaque">Gastos dos Políticos</span> utiliza a api Dados Abertos do
+            <a href="https://www.camara.leg.br/transparencia/gastos-parlamentares">Portal da Transparência</a>
+            para acessar e apresentar os gastos dos deputados [e futuramente dos senadores] com a cota parlamentar.
+            O projeto ainda está em desenvolvimento, portanto algumas coisas podem mudar bastante por aqui.
+            Sugestões são bem-vindas. Basta utilizar o formulário ao lado.</p>
+          </div>
+          <div class="col-md-6">
+            {% include "pages/_feedback_form.html "%}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card my-3">
+      <h5 class="card-header">Sobre Cota Parlamentar</h5>
       <div class="card-body">
         <div class="row">
           <div class="col-md-6">
@@ -14,10 +33,12 @@
           </div>
           <div class="col-md-6">
             <p>O valor mensal não utilizado fica acumulado ao longo do ano -
-              isso explica porque em alguns meses o valor gasto pode ser maior que a média mensal.</p>
+            isso explica porque em alguns meses o valor gasto pode ser maior que a média mensal.
+            Todas informações apresentadas neste site são públicas e acessíveis pelo
+            <a href="https://www.camara.leg.br/transparencia/gastos-parlamentares">Portal da Transparência</a>.</p>
           </div>
         </div>
-     </div>
-  </section>
-</div>
+      </div>
+    </section>
+  </div>
 {% endblock %}

@@ -1,0 +1,14 @@
+<form id="feedback-form" action="{{ url_for('pages.feedback') }}" method="POST">
+  {{ form.csrf_token }}
+  <div class="form-group">
+    {{ form.email.label }}
+    {{ form.email(class="form-control") }}
+  </div>
+  <div class="form-group">
+    {{ form.feedback.label }}
+    {{ form.feedback(class="form-control", rows="4") }}
+  </div>
+  <div class="text-right">
+    <button type="submit" class="btn btn-primary btn">Enviar</button>
+  </div>
+</form>
