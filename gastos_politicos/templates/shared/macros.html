@@ -6,7 +6,7 @@
            width="100px" height="133px">
     </div>
     {% if com_gasto %}
-      <small class="texto-destaque fixed-bottom-right">{{ com_gasto|currency(verbose=True) }}</small>
+      <span class="badge badge-warning fixed-bottom-right">{{ com_gasto|currency(verbose=True) }}</span>
     {% endif %}
   </div>
 {% endmacro %}
