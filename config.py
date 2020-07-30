@@ -23,8 +23,10 @@ class ProductionConfig(Config):
     DEBUG = False
     SQLALCHEMY_POOL_RECYCLE = int(os.environ.get("SQLALCHEMY_POOL_RECYCLE", 299))
     SQLALCHEMY_POOL_TIMEOUT = int(os.environ.get("SQLALCHEMY_POOL_TIMEOUT", 20))
+    # Cache config
     CACHE_TYPE = os.environ.get("CACHE_TYPE", "filesystem")
     CACHE_DIR = os.environ.get("CACHE_DIR", ".flaskcache/")
+    CACHE_DEFAULT_TIMEOUT = 0
 
 
 class DevelopmentConfig(Config):
