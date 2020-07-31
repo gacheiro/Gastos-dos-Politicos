@@ -37,27 +37,29 @@ class Politico(db.Model):
         ).all()
 
     @staticmethod
-    def ranking(mes=None, ano=2020, n=6, reverso=False):
-        """Retorna o ranking de `n` tuplas (Politico, total_gasto)
-        com os parlamentares que mais gastaram. Passe reverso=True
-        para retornar o ranking com os parlamentares que menos gastaram.
+    def classificar_por(ano, mes=None, uf=None, partido=None,
+                        ordem="desc", limite=-1):
+        """Classifica os políticos pelo total gasto de acordo com os
+        critérios de filtros. O parâmetro `ordem` pode ser 'asc' ou 'desc'.
         """
         query = db.session.query(
             Politico, func.sum(Reembolso.valor_liquido).label('total')
-        ).join(Reembolso)
-        # Aplica o filtro de mês (opcional)
-        if mes is not None:
-            query = query.filter_by(mes=mes)
-        # Aplica o filtro de ano
-        query = query.filter_by(ano=ano).group_by(
+        ).join(Reembolso).filter_by(ano=ano).group_by(
             Politico.id
         )
+        # Aplica os filtros opcionais
+        if mes:
+            query = query.filter(Reembolso.mes == mes)
+        if uf:
+            query = query.filter(Politico.uf == uf)
+        if partido:
+            query = query.filter(Politico.partido == partido)
         # Ordena por quem gastou mais ou gastou menos
-        if reverso:
-            query = query.order_by('total')
-        else:
+        if ordem == "desc":
             query = query.order_by(desc('total'))
-        return query.limit(n).all()
+        else:
+            query = query.order_by('total')
+        return query.limit(limite).all()
 
 
 class Reembolso(db.Model):
@@ -92,9 +94,8 @@ class Reembolso(db.Model):
             query = query.filter_by(ano=ano)
         if mes is not None:
             query = query.filter_by(mes=mes)
-        (total,) = query.first()
         # Retorna 0 caso o valor total seja None (banco de dados vazio)
-        return total or 0
+        return query.scalar() or 0
 
 
 class Feedback(db.Model):

@@ -1,13 +1,32 @@
 <form action="{{ url_for('pages.search') }}" method="POST" autocomplete="off">
-  <div class="input-group justify-content-center">
-    <!--div class="input-group-prepend">
-      <span class="input-group-text" id="search-prepend">{{ form.nome.label.text }}</span>
-    </div-->
-    <div class="autocomplete">
-      {{ form.nome(id="search", class="form-control", placeholder="Buscar político") }}
+  <div class="input-group mb-4">
+    <div class="input-group-prepend">
+      <span class="input-group-text">{{ form.nome.label.text }}</span>
     </div>
-    <div class="input-group-append">
-      <button class="btn btn-primary" type="submit">Buscar</button>
+    {{ form.nome(list="nomes", class="form-control", placeholder="Buscar político") }}
+    <datalist id="nomes">
+      {% for p in politicos -%}
+        <option value="{{ p.nome }}">
+      {%- endfor %}
+    </datalist>
+  </div>
+
+  <div class="form-row mb-4 justify-content-end">
+    <div class="col-md-3 input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">{{ form.uf.label.text }}</span>
+      </div>
+        {{ form.uf(class="form-control") }}
     </div>
+    <div class="col-md-6 input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">{{ form.partido.label.text }}</span>
+      </div>
+        {{ form.partido(class="form-control") }}
+    </div>
+  </div>
+
+  <div class="text-right">
+    <button class="btn btn-primary" type="submit">Buscar</button>
   </div>
 </form>

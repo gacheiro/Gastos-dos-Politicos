@@ -11,36 +11,57 @@ bp = Blueprint("pages", __name__)
 @bp.route("/")
 @cache.cached() # Cache somente o index por enquanto
 def index():
-    """Retorna o index do site."""
-    curr_month, curr_year = (current_app.config["CURRENT_MONTH"],
-                             current_app.config["CURRENT_YEAR"])
+    """Renderiza o index do site."""
+    mes, ano, limite = (current_app.config["CURRENT_MONTH"],
+                        current_app.config["CURRENT_YEAR"], 6)
     kwargs = {
-        "total_gasto": Reembolso.total_gasto(ano=curr_year),
-        "gastou_mais_mes": Politico.ranking(ano=curr_year, mes=curr_month),
-        "gastou_mais": Politico.ranking(ano=curr_year),
+        "total_gasto": Reembolso.total_gasto(ano=ano),
+        "gastou_mais_mes": Politico.classificar_por(ano=ano, mes=mes,
+                                                    limite=limite),
+        "gastou_mais": Politico.classificar_por(ano=ano, limite=limite),
         # Seleciona todos o politicos para usar no autocomplete
-        "politicos": Politico.query.all(),
+        "politicos": Politico.query.order_by(Politico.nome).all(),
         # Formulário para buscar um político específico
         "form": BuscaPoliticoForm(),
     }
     return render_template("pages/index.html", **kwargs)
 
 
-@bp.route("/search", methods=["POST"])
+@bp.route("/q", methods=["GET", "POST"])
 def search():
-    """Busca um politico pelo nome exatamente equivalente.
-    Isto é ok porque os nomes são gerados pelo autocomplete."""
+    """Busca um politico pelo nome ou filtra por uf e partido. Se uf ou partido
+    forem especificados, então ignora o campo nome e renderiza a lista de
+    políticos que correspondem à uf e/ou partido. Se somente nome for
+    especificado, tentará redirecionar para o página do político.
+    """
     form = BuscaPoliticoForm()
-    if form.validate_on_submit():
-        p = Politico.query.filter_by(nome=form.nome.data).first()
-        if p is not None:
-            return redirect(url_for("pages.show", id=p.id))
-    return redirect(url_for("pages.index"))
+    nome, uf, partido = form.nome.data, form.uf.data, form.partido.data
+    current_app.logger.info(
+        f"Busca por nome='{nome}' uf='{uf}' e partido='{partido}'.")
+
+    if not form.validate_on_submit():
+        return redirect(url_for("pages.index"))
+    # Filtra por uf e partido
+    elif uf or partido:
+        query = Politico.classificar_por(ano=current_app.config["CURRENT_YEAR"],
+                                         uf=uf, partido=partido, limite=-1)
+        return render_template(
+            "pages/filter.html",
+            ranking=query,
+            # `politicos` necessário para o autocomplete
+            politicos=Politico.query.order_by(Politico.nome).all(),
+            form=form,
+        )
+    # Tenta redirecionar para um político específico
+    # Retorna para o index se nenhum for encontrado
+    p = Politico.query.filter(Politico.nome.ilike(f"%{nome}%")).first()
+    return (redirect(url_for("pages.show", id=p.id)) if p
+            else redirect(url_for("pages.index")))
 
 
 @bp.route("/p/<int:id>", methods=["GET", "POST"])
 def show(id):
-    """Retorna as despesas de um parlamentar específico."""
+    """Renderiza a página de um político específico."""
     p = Politico.query.get_or_404(id)
     # Aplica os filtros de mes, ano e a paginação
     mes, ano, tipo, page = (request.args.get("mes"),
@@ -70,6 +91,7 @@ def show(id):
 
 @bp.route("/sobre")
 def about():
+    """Renderiza a página Sobre."""
     form = FeedbackForm()
     return render_template("pages/about.html", form=form)
 

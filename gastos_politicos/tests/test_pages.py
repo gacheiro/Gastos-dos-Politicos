@@ -9,6 +9,29 @@ def test_index(client):
     assert rv.status_code == 200
 
 
+def test_search_redirect(client):
+    rv = client.post("/q", data=dict(nome="", uf="", partido=""))
+    assert rv.status_code == 302    # Redirecionado para o index
+    rv = client.post("/q", data=dict(nome="NOME", uf="", partido=""))
+    assert rv.status_code == 302    # Redireciona para página do político
+
+
+def test_search_filter(client):
+    """Testa a busca por políticos."""
+    # Rederiza o filter.html
+    # Testa alguns elementos no html retornado
+    rv = client.post("/q", data=dict(nome="NOME", uf="SP", partido=""))
+    assert rv.status_code == 200
+    print(rv.data)
+    assert b"TODOS OS PARTIDOS / SP" in rv.data
+    rv = client.post("/q", data=dict(nome="NOME", uf="", partido="REDE"))
+    assert rv.status_code == 200
+    assert b"REDE / TODOS OS ESTADOS" in rv.data
+    rv = client.post("/q", data=dict(nome="NOME", uf="SP", partido="REDE"))
+    assert rv.status_code == 200
+    assert b"REDE / SP" in rv.data
+
+
 def test_about(client):
     """Testa a página Sobre."""
     rv = client.get("/")

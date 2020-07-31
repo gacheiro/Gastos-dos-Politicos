@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="py-4 my-4 bg-light">
+    <div class="search-form-wrapper">
+      {% include "pages/_search_form.html" %}
+    </div>
+  </section>
+  <section class="card stats my-4">
+    <h5 class="card-header">
+      Deputados de <span class="texto-destaque">
+      {%- if form.partido.data -%}
+        {{ form.partido.data }}
+      {%- else -%}
+        TODOS OS PARTIDOS
+      {%- endif %} / {% if form.uf.data -%}
+        {{ form.uf.data }}
+      {%- else -%}
+        TODOS OS ESTADOS
+      {%- endif -%}
+      </span>
+    </h5>
+    <div class="card-body">
+      {% with rank = ranking %}
+        {% include "pages/_ranking.html" %}
+      {% endwith %}
+    </div>
+  </section>
+{% endblock %}
