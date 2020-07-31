@@ -44,7 +44,7 @@ def search():
     # Filtra por uf e partido
     elif uf or partido:
         query = Politico.classificar_por(ano=current_app.config["CURRENT_YEAR"],
-                                         uf=uf, partido=partido, limite=-1)
+                                         uf=uf, partido=partido)
         return render_template(
             "pages/filter.html",
             ranking=query,

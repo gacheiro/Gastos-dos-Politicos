@@ -12,7 +12,7 @@ class Politico(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(250), nullable=False)
-    partido = db.Column(db.String(10), nullable=True)
+    partido = db.Column(db.String(20), nullable=True)
     uf = db.Column(db.String(2), nullable=False)
     legislatura = db.Column(db.Integer, nullable=False)
     url_foto = db.Column(db.String(250), nullable=True)
@@ -38,7 +38,7 @@ class Politico(db.Model):
 
     @staticmethod
     def classificar_por(ano, mes=None, uf=None, partido=None,
-                        ordem="desc", limite=-1):
+                        ordem="desc", limite=513):
         """Classifica os políticos pelo total gasto de acordo com os
         critérios de filtros. O parâmetro `ordem` pode ser 'asc' ou 'desc'.
         """
@@ -75,8 +75,8 @@ class Reembolso(db.Model):
     mes = db.Column(db.Integer, nullable=False)
     ano = db.Column(db.Integer, nullable=False)
     data = db.Column(db.Date, nullable=False)
-    valor = db.Column(db.Numeric, nullable=False)
-    valor_liquido = db.Column(db.Numeric, nullable=False)
+    valor = db.Column(db.Float, nullable=False)
+    valor_liquido = db.Column(db.Float, nullable=False)
     url_documento = db.Column(db.String(250), nullable=True)
     nome_fornecedor = db.Column(db.String(250), nullable=False)
     id_fornecedor = db.Column(db.String(20), nullable=False)
