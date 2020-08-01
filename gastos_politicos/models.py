@@ -76,7 +76,6 @@ class Politico(db.Model):
         return query.all()
 
 
-
 class Reembolso(db.Model):
     # Para os reembolsos com serviços postais, o cod_documento costuma ser 0
     # O que dificulta usar somente o cod como chave primária
@@ -84,7 +83,7 @@ class Reembolso(db.Model):
     cod_documento = db.Column(db.Integer, primary_key=True)
     num_documento = db.Column(db.String(100), primary_key=True)
     politico_id = db.Column(db.Integer, db.ForeignKey('politico.id'),
-                            nullable=False)
+                            nullable=False, index=True)
     tipo = db.Column(db.String(250), nullable=False)
     tipo_documento = db.Column(db.String(30), nullable=False)
     mes = db.Column(db.Integer, nullable=False)
