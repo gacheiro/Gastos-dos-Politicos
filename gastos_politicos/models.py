@@ -51,17 +51,17 @@ class Politico(db.Model):
         """Classifica os políticos pelo total gasto de acordo com os
         critérios de filtros. O parâmetro `ordem` pode ser 'asc' ou 'desc'.
         """
-        current_app.logger.info(
-            f"classificar_por({ano}, {mes}, {uf}, {partido}, {ordem}, {limite})"
+        subquery = db.session.query(
+            Reembolso.politico_id,
+            func.sum(Reembolso.valor_liquido).label("total")
+        ).filter_by(ano=ano).group_by(
+            Reembolso.politico_id
         )
-        query = db.session.query(
-            Politico, func.sum(Reembolso.valor_liquido).label('total')
-        ).join(Reembolso).filter_by(ano=ano).group_by(
-            Politico.id
-        )
-        # Aplica os filtros opcionais
+        # Aplica os filtros opcionais na subquery
         if mes:
-            query = query.filter(Reembolso.mes == mes)
+            subquery = subquery.filter(Reembolso.mes == mes)
+        # Query principal
+        query = db.session.query(Politico, "total").join(subquery.subquery())
         if uf:
             query = query.filter(Politico.uf == uf)
         if partido:
@@ -71,7 +71,10 @@ class Politico(db.Model):
             query = query.order_by(desc('total'))
         else:
             query = query.order_by('total')
-        return query.limit(limite).all()
+        query = query.limit(limite)
+        current_app.logger.info(query)
+        return query.all()
+
 
 
 class Reembolso(db.Model):
