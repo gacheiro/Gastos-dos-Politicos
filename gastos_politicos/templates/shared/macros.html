@@ -1,47 +1,16 @@
 
-{% macro retrato(parlamentar, com_gasto='') %}
+{% macro retrato(politico, com_gasto='', tamanho=(80, 106)) %}
   <div class="retrato-wrapper">
     <div class="retrato rounded-circle border border-warning">
-      <img src="{{ parlamentar.url_foto }}" alt="{{ parlamentar.nome }}"
-           width="100px" height="133px">
+      <img src="{{ politico.url_foto }}" alt="{{ politico.nome }}"
+           width="{{ tamanho[0] }}" height="tamanho[1]">
     </div>
     {% if com_gasto %}
-      <span class="badge badge-warning fixed-bottom-right">{{ com_gasto|currency(verbose=True) }}</span>
+      <span class="badge badge-warning fixed-bottom-right">
+        {{ com_gasto|currency(verbose=True) }}
+      </span>
     {% endif %}
   </div>
-{% endmacro %}
-
-
-{% macro paginacao(pagination, endpoint, page_id=None) %}
-  <nav aria-label="Paginação">
-    <ul class="pagination pagination justify-content-end">
-      {% for page in pagination.iter_pages(2, 2, 2, 2) %}
-        {% if page %}
-          {% if page == pagination.page %}
-            <li class="page-item active">
-              <span class="page-link">{{ page }}</span>
-            </li>
-          {% else %}
-            <li class="page-item">
-              {# Reaplica os filtros presentes à url da paginação #}
-              {# atualizando o parâmetro `page` #}
-              {% set args = dict(request.args, page=page) %}
-
-              {% if page_id %}
-                {% set url = url_for(endpoint, id=page_id, **args) %}
-              {% else %}
-                {% set url = url_for(endpoint, **args) %}
-              {% endif %}
-              <a class="page-link" href="{{ url }}">{{ page }}</a>
-            </li>
-          {% endif %}
-        {% else %}
-          <li class="page-item disabled">
-            <span class="page-link">...</<span></li>
-        {% endif %}
-      {% endfor %}
-    </ul>
-  </nav>
 {% endmacro %}
 
 
