@@ -9,7 +9,6 @@ bp = Blueprint("pages", __name__)
 
 
 @bp.route("/")
-@cache.cached() # Cache somente o index por enquanto
 def index():
     """Renderiza o index do site."""
     mes, ano, limite = (current_app.config["CURRENT_MONTH"],
@@ -19,8 +18,8 @@ def index():
         "gastou_mais_mes": Politico.classificar_por(ano=ano, mes=mes,
                                                     limite=limite),
         "gastou_mais": Politico.classificar_por(ano=ano, limite=limite),
-        # Seleciona todos o politicos para usar no autocomplete
-        "politicos": Politico.query.order_by(Politico.nome).all(),
+        # Seleciona os nomes dos politicos para usar no autocomplete
+        "datalist": Politico.lista_de_nomes(),
         # Formulário para buscar um político específico
         "form": BuscaPoliticoForm(),
     }
@@ -48,8 +47,8 @@ def search():
         return render_template(
             "pages/filter.html",
             ranking=query,
-            # `politicos` necessário para o autocomplete
-            politicos=Politico.query.order_by(Politico.nome).all(),
+            # Nomes necessários para o autocomplete
+            datalist=Politico.lista_de_nomes(),
             form=form,
         )
     # Tenta redirecionar para um político específico

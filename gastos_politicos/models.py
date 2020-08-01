@@ -1,5 +1,8 @@
+from flask import current_app
 from sqlalchemy import func, desc
 from flask_sqlalchemy import SQLAlchemy
+
+from gastos_politicos.ext.cache import cache
 
 db = SQLAlchemy()
 
@@ -16,6 +19,11 @@ class Politico(db.Model):
     uf = db.Column(db.String(2), nullable=False)
     legislatura = db.Column(db.Integer, nullable=False)
     url_foto = db.Column(db.String(250), nullable=True)
+
+    @staticmethod
+    def lista_de_nomes():
+        """Retorna a lista com os nomes de todos os políticos."""
+        return [nome for (nome,) in db.session.query(Politico.nome).all()]
 
     def despesas(self, ano=None, mes=None):
         """Retorna uma query com despesas do parlamentar
@@ -37,11 +45,15 @@ class Politico(db.Model):
         ).all()
 
     @staticmethod
+    @cache.memoize()
     def classificar_por(ano, mes=None, uf=None, partido=None,
                         ordem="desc", limite=513):
         """Classifica os políticos pelo total gasto de acordo com os
         critérios de filtros. O parâmetro `ordem` pode ser 'asc' ou 'desc'.
         """
+        current_app.logger.info(
+            f"classificar_por({ano}, {mes}, {uf}, {partido}, {ordem}, {limite})"
+        )
         query = db.session.query(
             Politico, func.sum(Reembolso.valor_liquido).label('total')
         ).join(Reembolso).filter_by(ano=ano).group_by(

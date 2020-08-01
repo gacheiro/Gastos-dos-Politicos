@@ -5,8 +5,8 @@
     </div>
     {{ form.nome(list="nomes", class="form-control", placeholder="Buscar político") }}
     <datalist id="nomes">
-      {% for p in politicos -%}
-        <option value="{{ p.nome }}">
+      {% for nome in datalist -%}
+        <option value="{{ nome }}">
       {%- endfor %}
     </datalist>
   </div>
