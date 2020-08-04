@@ -30,7 +30,8 @@ def test_month_abbr():
 def test_currency():
     """Testa as formações em moeda."""
     # Aparentemente depende da versão do python o simbolo ser separado
-    # ou não do valor
+    # ou não do valor (python locale)
     assert currency(114999.25) in ["R$ 114.999,00", "R$114.999,00"]
+    # Quando verbose=True, não depende do locale
     assert currency(114999.25, verbose=True) == "R$ 114 MIL"
     assert currency(114, verbose=True) == "R$ 114"

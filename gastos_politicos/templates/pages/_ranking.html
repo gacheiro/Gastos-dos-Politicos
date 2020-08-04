@@ -1,16 +1,11 @@
 {# Fragmento de html para renderizar o ranking de parlamentares
    Usado no index em `Quem gastou mais`. `Quem gastou menos` #}
 
-{% from "shared/macros.html" import retrato %}
+{% from "shared/macros.html" import politico_card %}
 
 <div class="d-flex flex-wrap mt-4 justify-content-center">
-  {% for parlamentar, total in rank %}
-    <div class="p2 mx-2 mb-4 text-center" style="width: 120px;">
-      <a href="{{ url_for('pages.show', id=parlamentar.id) }}">
-        {{ retrato(parlamentar, com_gasto=total) }}
-      </a>
-      <span class="nome-parlamentar">{{ parlamentar.nome }}</span>
-    </div>
+  {% for politico, total_gasto in rank %}
+    {{ politico_card(politico, total_gasto) }}
   {% else %}
     <p class="text-muted">Ainda não há dados disponíveis.</p>
   {% endfor %}

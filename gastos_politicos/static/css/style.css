@@ -21,6 +21,10 @@
     margin-right: auto;
 }
 
+.politico-card {
+    width: 120px;
+}
+
 .retrato-wrapper {
     width: 100px;
     height: 100px;
@@ -33,15 +37,28 @@
     width: 100px;
     height: 100px;
     margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
     overflow: hidden;
     text-align: center;
     background-color: white;
 }
 
-.fixed-bottom-right {
+.nome-politico {
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+/* apaga a decoração dos links */
+a .nome-politico {
+    color: black;
+}
+
+.fixed-bottom-center {
     position: absolute;
-    bottom: 0;
     right: 0;
+    left: 0;
+    bottom: 0;
 }
 
 .stats {
@@ -53,19 +70,9 @@
     font-size: 0.85rem;
 }
 
-.nome-parlamentar {
-    font-size: 1.10rem;
-    font-weight: bold;
-}
-
 .texto-destaque {
     background-color: #ffc107!important;
     padding-left: .25rem!important;
     padding-right: .25rem!important;
     font-weight: bold;
-}
-
-/* apaga a decoração dos links */
-a .texto-destaque {
-    color: black;
 }

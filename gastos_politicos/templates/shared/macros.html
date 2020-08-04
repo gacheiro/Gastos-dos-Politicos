@@ -1,15 +1,28 @@
 
-{% macro retrato(politico, com_gasto='', tamanho=(80, 106)) %}
-  <div class="retrato-wrapper">
-    <div class="retrato rounded-circle border border-warning">
-      <img src="{{ politico.url_foto }}" alt="{{ politico.nome }}"
-           width="{{ tamanho[0] }}" height="{{ tamanho[1] }}">
-    </div>
-    {% if com_gasto %}
-      <span class="badge badge-warning fixed-bottom-right">
-        {{ com_gasto|currency(verbose=True) }}
-      </span>
-    {% endif %}
+{% macro retrato(politico, tamanho=(80, 106)) %}
+  <div class="retrato rounded-circle border border-muted">
+    <img src="{{ politico.url_foto }}" alt="{{ politico.nome }}"
+         width="{{ tamanho[0] }}" height="{{ tamanho[1] }}">
+  </div>
+{% endmacro %}
+
+
+{% macro politico_card(politico, total_gasto=None) %}
+  <!--div class="p2 mx-2 mb-4 text-center" style="width: 120px;"-->
+  <div class="politico-card p2 mx-2 mb-4 text-center">
+    <a href="{{ url_for('pages.show', id=politico.id) }}">
+      <div class="retrato-wrapper">
+        {{ retrato(politico) }}
+        {% if total_gasto %}
+          <div class="fixed-bottom-center">
+            <span class="badge badge-success text-white rounded border border-white">
+              {{ total_gasto|currency(verbose=True) }}
+            </span>
+          </div>
+        {% endif %}
+      </div>
+      <div class="nome-politico">{{ politico.nome }}</div>
+    </a>
   </div>
 {% endmacro %}
 
