@@ -42,7 +42,7 @@ class Politico(db.Model):
             Reembolso.mes, func.sum(Reembolso.valor_liquido)
         ).filter_by(politico=self, ano=ano).group_by(
             Reembolso.mes
-        ).all()
+        ).order_by(Reembolso.mes.desc()).all()
 
     @staticmethod
     @cache.memoize()

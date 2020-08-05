@@ -2,13 +2,13 @@
   <div class="form-row">
     {{ form.csrf_token }}
     <div class="col form-group">
-      {{ form.ano(class="form-control") }}
+      {{ form.ano(class="form-control", readonly="1") }}
     </div>
     <div class="col form-group">
       {{ form.mes(class="form-control") }}
     </div>
     <div class="col-sm-6 form-group">
-      {{ form.tipo(class="form-control") }}
+      {{ form.tipo(class="form-control", readonly="1") }}
     </div>
   </div>
   <div class="text-right">
