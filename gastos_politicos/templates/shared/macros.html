@@ -1,8 +1,11 @@
 
 {% macro retrato(politico, tamanho=(80, 106)) %}
-  <div class="retrato rounded-circle border border-muted">
+  {% set width, height = tamanho %}
+  {% set m = width if width > height else height %}
+  <div class="retrato rounded-circle border border-muted"
+       style="width: {{ m }}px; height: {{ m }}px">
     <img src="{{ politico.url_foto }}" alt="{{ politico.nome }}"
-         width="{{ tamanho[0] }}" height="{{ tamanho[1] }}">
+         width="{{ width }}" height="{{ height }}">
   </div>
 {% endmacro %}
 
@@ -20,11 +23,16 @@
           </div>
         {% endif %}
       </div>
-      <div class="politico-info">
-        <span class="politico-nome">{{ politico.nome }}</span><br>
-        <span>{{ politico.partido }}/{{ politico.uf }}</span>
-      </div>
+      {{ politico_info(politico) }}
     </a>
+  </div>
+{% endmacro %}
+
+
+{% macro politico_info(politico) %}
+  <div class="politico-info">
+    <strong>{{ politico.nome }}</strong><br>
+    <span>{{ politico.partido }}/{{ politico.uf }}</span>
   </div>
 {% endmacro %}
 

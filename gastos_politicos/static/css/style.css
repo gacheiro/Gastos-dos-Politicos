@@ -23,16 +23,12 @@
 
 .politico-card {
     width: 135px;
-    margin: 0 auto 16px auto;
+    margin: 8px 4px;
 }
 
 .politico-info {
     font-size: 0.85rem;
     line-height: normal;
-}
-
-.politico-nome {
-    font-weight: bold;
 }
 
 /* apaga a decoração dos links */
@@ -41,17 +37,12 @@ a .politico-info {
 }
 
 .retrato-wrapper {
-    width: 100px;
-    height: 100px;
-    margin-left: auto;
-    margin-right: auto;
     position: relative;
 }
 
 .retrato {
-    width: 100px;
-    height: 100px;
-    margin-top: 10px;
+    /* o tamanho é definido dinamicamente */
+    margin: 10px auto 0;
     overflow: hidden;
     text-align: center;
     background-color: white;

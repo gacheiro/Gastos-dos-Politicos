@@ -1,11 +1,12 @@
 {% extends "base.html" %}
-{% from "shared/macros.html" import paginate, politico_card %}
+{% from "shared/macros.html" import paginate, retrato, politico_info %}
 
 {% block content %}
   <section class="row my-5">
-    <div class="col-md-3">
-      <div class="float-center">
-        {{ politico_card(parlamentar) }}
+    <div class="col-md-3 d-flex justify-content-center">
+      <div class="text-center">
+        {{ retrato(parlamentar, tamanho=(114, 158)) }}
+        {{ politico_info(parlamentar) }}
       </div>
     </div>
     <div class="col-md-9">
