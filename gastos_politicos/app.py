@@ -10,4 +10,12 @@ def create_app(config=None):
     cli.init_app(app)
     web.init_app(app)
     models.init_app(app)
+    app.shell_context_processor(shell_context)
     return app
+
+
+def shell_context():
+    """Exporta algumas classes para usar no flask shell."""
+    from .models import db, Politico, Reembolso, Feedback
+    return dict(db=db, Politico=Politico,
+                Reembolso=Reembolso, Feedback=Feedback)
