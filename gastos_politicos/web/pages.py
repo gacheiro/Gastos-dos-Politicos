@@ -12,7 +12,7 @@ bp = Blueprint("pages", __name__)
 def index():
     """Renderiza o index do site."""
     mes, ano, limite = (current_app.config["CURRENT_MONTH"],
-                        current_app.config["CURRENT_YEAR"], 6)
+                        current_app.config["CURRENT_YEAR"], 7)
     kwargs = {
         "total_gasto": Reembolso.total_gasto(ano=ano),
         "gastou_mais_mes": Politico.classificar_por(ano=ano, mes=mes,

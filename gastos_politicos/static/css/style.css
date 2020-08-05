@@ -22,7 +22,22 @@
 }
 
 .politico-card {
-    width: 120px;
+    width: 135px;
+    margin: 0 auto 16px auto;
+}
+
+.politico-info {
+    font-size: 0.85rem;
+    line-height: normal;
+}
+
+.politico-nome {
+    font-weight: bold;
+}
+
+/* apaga a decoração dos links */
+a .politico-info {
+    color: black;
 }
 
 .retrato-wrapper {
@@ -37,21 +52,9 @@
     width: 100px;
     height: 100px;
     margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
     overflow: hidden;
     text-align: center;
     background-color: white;
-}
-
-.nome-politico {
-    font-size: 0.85rem;
-    font-weight: bold;
-}
-
-/* apaga a decoração dos links */
-a .nome-politico {
-    color: black;
 }
 
 .fixed-bottom-center {

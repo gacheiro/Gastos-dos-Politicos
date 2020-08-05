@@ -8,8 +8,7 @@
 
 
 {% macro politico_card(politico, total_gasto=None) %}
-  <!--div class="p2 mx-2 mb-4 text-center" style="width: 120px;"-->
-  <div class="politico-card p2 mx-2 mb-4 text-center">
+  <div class="politico-card text-center">
     <a href="{{ url_for('pages.show', id=politico.id) }}">
       <div class="retrato-wrapper">
         {{ retrato(politico) }}
@@ -21,7 +20,10 @@
           </div>
         {% endif %}
       </div>
-      <div class="nome-politico">{{ politico.nome }}</div>
+      <div class="politico-info">
+        <span class="politico-nome">{{ politico.nome }}</span><br>
+        <span>{{ politico.partido }}/{{ politico.uf }}</span>
+      </div>
     </a>
   </div>
 {% endmacro %}

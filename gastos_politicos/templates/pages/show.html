@@ -1,17 +1,12 @@
 {% extends "base.html" %}
-{% from "shared/macros.html" import paginate, retrato %}
+{% from "shared/macros.html" import paginate, politico_card %}
 
 {% block content %}
   <section class="row my-5">
     <div class="col-md-3">
-      {# TODO: usar o macro `politico_card` #}
-      {{ retrato(parlamentar) }}
-      <span class="text-center">
-        <h5>
-          {{ parlamentar.nome }}<br>
-          <small>{{ parlamentar.partido }}/{{ parlamentar.uf }}</small>
-        </h5>
-      </span>
+      <div class="float-center">
+        {{ politico_card(parlamentar) }}
+      </div>
     </div>
     <div class="col-md-9">
       <div class="mb-3 p-2 bg-light">
