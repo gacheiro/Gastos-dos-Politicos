@@ -35,15 +35,15 @@ def currency(value, grouping=True, symbol=True, verbose=False):
        114_999|currency => R$ 114.000,00
        114_999|currency(verbose=True) => R$ 114 MIL
     """
-    value = int(value)
-    if verbose:
-        suffix = ""
-        if value >= 1000:
-            value //= 1000
-            suffix = " MIL"
-        return f"R$ {value}{suffix}"
-
     try:
-        return locale.currency(value, grouping=grouping, symbol=symbol)
+        value = int(value)
+        if verbose:
+            suffix = ""
+            if value >= 1000:
+                value //= 1000
+                suffix = " MIL"
+            return f"R$ {value}{suffix}"
+        else:
+            return locale.currency(value, grouping=grouping, symbol=symbol)
     except (TypeError, ValueError):
-        return ''
+        return 'NaN'

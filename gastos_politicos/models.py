@@ -1,5 +1,6 @@
 from flask import current_app
 from sqlalchemy import func, desc
+from sqlalchemy.sql.expression import literal_column
 from flask_sqlalchemy import SQLAlchemy
 
 from gastos_politicos.ext.cache import cache
@@ -61,16 +62,18 @@ class Politico(db.Model):
         if mes:
             subquery = subquery.filter(Reembolso.mes == mes)
         # Query principal
-        query = db.session.query(Politico, "total").join(subquery.subquery())
+        query = db.session.query(
+            Politico, literal_column("total")).join(subquery.subquery())
+        # Aplica os filtros opcionais na query principal
         if uf:
             query = query.filter(Politico.uf == uf)
         if partido:
             query = query.filter(Politico.partido == partido)
         # Ordena por quem gastou mais ou gastou menos
         if ordem == "desc":
-            query = query.order_by(desc('total'))
+            query = query.order_by(desc(literal_column("total")))
         else:
-            query = query.order_by('total')
+            query = query.order_by(literal_column("total"))
         query = query.limit(limite)
         current_app.logger.info(query)
         return query.all()

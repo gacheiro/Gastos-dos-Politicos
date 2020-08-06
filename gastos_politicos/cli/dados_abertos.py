@@ -8,26 +8,26 @@ HEADERS = {
 }
 
 
-def deputados():
+def deputados(fetch=requests.get):
     """Retorna os deputados da legislação atual."""
-    r = requests.get(f"{BASE_URL}/deputados", headers=HEADERS)
+    r = fetch(f"{BASE_URL}/deputados", headers=HEADERS)
+    assert r.status_code == 200
     return r.json()["dados"]
 
 
-# TODO: obeter também a paginação completa, 
-#       e não somente os primeiros 100 itens
-def despesas(deputado_id, mes=None, ano=None):
+def despesas(deputado_id, mes=None, ano=None, fetch=requests.get):
     """Retorna as despesas do deputado."""
     url = (f"{BASE_URL}/deputados/{deputado_id}/despesas?"
            "ordem=DESC&ordenarPor=dataDocumento&itens=100")
-    if mes is not None:
-        url += f"&mes={mes}"
     if ano is not None:
         url += f"&ano={ano}"
+        # Aplica o filtro de mês somente se o ano for especificado
+        if mes is not None:
+            url += f"&mes={mes}"
     next = url
     while next is not None:
         print(next)
-        resp = requests.get(next, headers=HEADERS)
+        resp = fetch(next, headers=HEADERS)
         assert resp.status_code == 200
         resp_json = resp.json()
         for despesa in resp_json.get("dados", []):

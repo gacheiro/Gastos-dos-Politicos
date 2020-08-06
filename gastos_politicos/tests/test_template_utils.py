@@ -35,3 +35,5 @@ def test_currency():
     # Quando verbose=True, não depende do locale
     assert currency(114999.25, verbose=True) == "R$ 114 MIL"
     assert currency(114, verbose=True) == "R$ 114"
+    assert currency('NaN') == 'NaN'
+    assert currency('NaN', verbose=True) == 'NaN'

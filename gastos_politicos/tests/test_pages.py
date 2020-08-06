@@ -34,7 +34,7 @@ def test_search_filter(client):
 
 def test_about(client):
     """Testa a página Sobre."""
-    rv = client.get("/")
+    rv = client.get("/sobre")
     assert rv.status_code == 200
 
 
@@ -53,3 +53,13 @@ def test_feedback(client):
     fb = Feedback.query.one()
     assert fb.email == "email@example.com"
     assert fb.feedback == "This is a feedback."
+
+
+def test_invalid_feedback(client):
+    rv = client.get("/sobre")
+    signed_token = g.csrf_token
+    rv = client.post("/feedback", data=dict(
+                        email="",
+                        feedback="This is a feedback.",
+                        csrf_token=signed_token))
+    assert Feedback.query.count() == 0

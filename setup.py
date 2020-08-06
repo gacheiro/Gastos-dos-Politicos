@@ -11,6 +11,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
+        "coverage>=5.2.1",
         "Flask>=1.1.2",
         "Flask-Caching>=1.9.0",
         "Flask-SQLAlchemy>=2.4.3",
