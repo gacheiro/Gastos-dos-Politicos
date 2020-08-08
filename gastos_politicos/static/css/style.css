@@ -75,3 +75,12 @@ a .politico-info {
     padding: 16px 8px;
     margin: 16px 0;
 }
+
+.ranking-card a {
+    color: black;
+}
+
+.ranking-card a:hover {
+    text-decoration: none;
+    background-color: white;
+}
