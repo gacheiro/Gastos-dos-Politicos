@@ -70,3 +70,8 @@ a .politico-info {
     padding-right: .25rem!important;
     font-weight: bold;
 }
+
+.ranking-card {
+    padding: 16px 8px;
+    margin: 16px 0;
+}

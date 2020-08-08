@@ -13,31 +13,26 @@
       {% include "pages/_search_form.html" %}
     </div>
   </section>
-  <section class="card stats my-4">
-    <h5 class="card-header">
-      Quem mais gastou em <span class="texto-destaque">{{ mes|month_abbr|upper }}/{{ ano }}</span>
-    </h5>
-    <div class="card-body">
-      {% with rank = gastou_mais_mes %}
-        {% include "pages/_ranking.html" %}
-      {% endwith %}
+  <section class="mb-4">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="ranking-card bg-light rounded">
+          <h5 class="mb-3">Quem mais gastou em <span class="texto-destaque">{{ mes|month_abbr|upper }}/{{ ano }}</span></h5>
+          <hr>
+          {% with ranking = gastou_mais_mes %}
+            {% include "pages/_ranking_v.html" %}
+          {% endwith %}
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="ranking-card bg-light">
+          <h5 class="mb-3">Quem mais gastou em <span class="texto-destaque">{{ ano }}</span></h5>
+          <hr>
+          {% with ranking = gastou_mais %}
+            {% include "pages/_ranking_v.html" %}
+          {% endwith %}
+        </div>
+      </div>
     </div>
   </section>
-  <section class="card stats mb-4">
-    <h5 class="card-header">
-      Quem mais gastou em <span class="texto-destaque">{{ ano }}</span>
-    </h5>
-    <div class="card-body">
-      {% with rank = gastou_mais %}
-        {% include "pages/_ranking.html" %}
-      {% endwith %}
-    </div>
-  </section>
-{% endblock %}
-
-{% block script %}
-  {% autoescape false %}
-    let politicos = {{ politicos|map(attribute="nome")|list }}
-  {% endautoescape %}
-  autocomplete(document.getElementById("search"), politicos);
 {% endblock %}
