@@ -36,6 +36,7 @@ def test_about(client):
     """Testa a página Sobre."""
     rv = client.get("/sobre")
     assert rv.status_code == 200
+    assert "<title>Gastos dos Políticos - Sobre</title>".encode() in rv.data
 
 
 def test_feedback(client):

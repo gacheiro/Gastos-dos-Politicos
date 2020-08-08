@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% from "shared/macros.html" import paginate, retrato, politico_info %}
 
+
+{% block subtitle %}
+  - {{ parlamentar.nome }} ({{ parlamentar.partido }}/{{ parlamentar.uf }})
+{% endblock %}
+
+
 {% block content %}
   <section class="row my-5">
     <div class="col-md-3 d-flex justify-content-center">
