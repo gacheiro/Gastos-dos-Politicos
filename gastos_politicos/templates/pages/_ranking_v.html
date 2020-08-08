@@ -1,0 +1,25 @@
+{% from "shared/macros.html" import retrato, politico_info, politico_card %}
+
+{% set total_sum = ranking|map("last")|max %}
+
+<div class="ranking-card-body">
+  {% for politico, total_gasto in ranking %}
+    <div class="d-flex mb-2 justify-content-start align-items-center" style="width: 100%;">
+      <a href="{{ url_for('pages.show', id=politico.id) }}">
+        <div class="rounded-circle mr-1 text-center bg-white" style="width: 4.5em; height: 4.5em; overflow: hidden;">
+          <img src="{{ politico.url_foto }}" alt="{{ politico.nome }}"
+               width="75%" height="100%">
+        </div>
+      </a>
+      <div style="width: 70%;">
+        <div class="bg-success rounded-pill text-white text-right" style="width: {{ (total_gasto/total_sum)*100 }}%; height: 50%;">
+          <strong class="mr-2" style="font-size: 1rem;">{{ total_gasto|currency(verbose=True) }}</strong>
+        </div>
+        <div style="font-size: 0.9rem;">
+           <strong>{{ politico.nome }}</strong>
+           <span class="text-muted">({{ politico.partido }}/{{ politico.uf}})</span>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
