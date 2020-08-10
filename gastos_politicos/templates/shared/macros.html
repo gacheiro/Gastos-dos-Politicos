@@ -57,3 +57,35 @@
     </ul>
   </nav>
 {% endmacro %}
+
+
+{% macro _inline_politico_info(politico, font_size) %}
+  {# Renderiza o nome, partido e uf do político em uma única linha. #}
+  <span class="inline-politico-info" style="font-size: {{ font_size }};">
+    <strong>{{ politico.nome }}</strong>
+    <span class="text-muted">({{ politico.partido }}/{{ politico.uf }})</span>
+  </span>
+{% endmacro %}
+
+
+{% macro media_reembolso(reembolso) %}
+  <div id="{{ reembolso.cod_documento }}-{{ reembolso.num_documento }}"
+       class="media-reembolso media border-bottom border-black p-2">
+    <div class="mr-2">
+      <a class="link" href="{{ url_for('pages.show', id=reembolso.politico_id) }}">
+        {{ retrato(reembolso.politico, tamanho=(50, 66)) }}
+      </a>
+    </div>
+    <div class="media-body">
+      <small class="text-muted float-right" style="font-size: 0.8rem;">
+        {{ reembolso.data.day }} de {{ reembolso.data.month|month_abbr }}
+      </small>
+      <h5><a class="link" href="{{ url_for('pages.show', id=reembolso.politico_id) }}">
+        {{ _inline_politico_info(reembolso.politico, font_size="0.9rem") }}
+      </a></h5>
+      <p style="font-size: 0.9rem;">Gasto de {{ reembolso.valor_liquido|currency }}
+        em {{ reembolso.tipo.rstrip(".")|lower }}.
+      </p>
+    </div>
+  </div>
+{% endmacro %}

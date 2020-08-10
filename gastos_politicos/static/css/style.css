@@ -84,3 +84,25 @@ a .politico-info {
     text-decoration: none;
     background-color: white;
 }
+
+.ultimos-reembolsos-card {
+    padding: 16px 8px 0 8px;
+    margin: 16px 0;
+}
+
+.titulo-card {
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+}
+
+/* Utilidades */
+
+.link {
+    color: black;
+}
+
+.link:hover {
+    text-decoration: none;
+}

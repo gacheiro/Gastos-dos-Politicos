@@ -18,10 +18,11 @@ def index():
         "gastou_mais_mes": Politico.classificar_por(ano=ano, mes=mes,
                                                     limite=limite),
         "gastou_mais": Politico.classificar_por(ano=ano, limite=limite),
-        # Seleciona os nomes dos politicos para usar no autocomplete
-        "datalist": Politico.lista_de_nomes(),
+        "reembolsos_recentes": Reembolso.mais_recentes(acima_de=1000, n=11),
         # Formulário para buscar um político específico
         "form": BuscaPoliticoForm(),
+        # Seleciona os nomes dos politicos para usar no autocomplete do form
+        "datalist": Politico.lista_de_nomes(),
     }
     return render_template("pages/index.html", **kwargs)
 

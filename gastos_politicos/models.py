@@ -114,6 +114,14 @@ class Reembolso(db.Model):
         # Retorna 0 caso o valor total seja None (banco de dados vazio)
         return query.scalar() or 0
 
+    @staticmethod
+    @cache.memoize()
+    def mais_recentes(acima_de=0, n=10):
+        """Retorna os `n` reembolsos mais recentes acima do valor especifico."""
+        return Reembolso.query.filter(
+            Reembolso.valor_liquido > acima_de
+        ).order_by(Reembolso.data.desc()).limit(n).all()
+
 
 class Feedback(db.Model):
     id = db.Column(db.Integer, primary_key=True)
