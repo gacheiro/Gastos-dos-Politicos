@@ -9,6 +9,7 @@ bp = Blueprint("pages", __name__)
 
 
 @bp.route("/")
+@cache.cached()
 def index():
     """Renderiza o index do site."""
     mes, ano, limite = (current_app.config["CURRENT_MONTH"],

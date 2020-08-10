@@ -3,8 +3,6 @@ from sqlalchemy import func, desc
 from sqlalchemy.sql.expression import literal_column
 from flask_sqlalchemy import SQLAlchemy
 
-from gastos_politicos.ext.cache import cache
-
 db = SQLAlchemy()
 
 
@@ -46,7 +44,6 @@ class Politico(db.Model):
         ).order_by(Reembolso.mes.desc()).all()
 
     @staticmethod
-    @cache.memoize()
     def classificar_por(ano, mes=None, uf=None, partido=None,
                         ordem="desc", limite=513):
         """Classifica os políticos pelo total gasto de acordo com os
@@ -98,7 +95,7 @@ class Reembolso(db.Model):
     nome_fornecedor = db.Column(db.String(250), nullable=False)
     id_fornecedor = db.Column(db.String(20), nullable=False)
 
-    politico = db.relationship('Politico')
+    politico = db.relationship('Politico', lazy=False)
 
     @staticmethod
     def total_gasto(politico=None, ano=None, mes=None):
@@ -115,7 +112,6 @@ class Reembolso(db.Model):
         return query.scalar() or 0
 
     @staticmethod
-    @cache.memoize()
     def mais_recentes(acima_de=0, n=10):
         """Retorna os `n` reembolsos mais recentes acima do valor especifico."""
         return Reembolso.query.filter(
