@@ -52,3 +52,17 @@ class Request:
 @pytest.fixture
 def requests():
     return Request()
+
+
+@pytest.fixture
+def politicos(client):
+    from .fixtures.data import politicos
+    db.session.bulk_save_objects(politicos)
+    return politicos
+
+
+@pytest.fixture
+def reembolsos(client):
+    from.fixtures.data import reembolsos
+    db.session.bulk_save_objects(reembolsos)
+    return reembolsos
