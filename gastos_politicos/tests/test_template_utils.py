@@ -9,6 +9,7 @@ from gastos_politicos.web.template_utils import (month_name, month_abbr,
     (4,  "abril"),   (5,  "maio"),      (6,  "junho"),
     (7,  "julho"),   (8,  "agosto"),    (9,  "setembro"),
     (10, "outubro"), (11, "novembro"),  (12, "dezembro"),
+    ("", "")
 ))
 def test_month_name(mes, nome):
     """Testa as formatações dos nomes dos meses."""
@@ -20,6 +21,7 @@ def test_month_name(mes, nome):
     (4,  "abr"), (5,  "mai"), (6,  "jun"),
     (7,  "jul"), (8,  "ago"), (9,  "set"),
     (10, "out"), (11, "nov"), (12, "dez"),
+    ("", "")
 ))
 def test_month_abbr(mes, abrev):
     """Testa as formatações das abreviações dos meses."""
