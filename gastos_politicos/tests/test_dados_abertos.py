@@ -1,3 +1,5 @@
+import pytest
+
 from gastos_politicos.cli.dados_abertos import deputados, despesas, _next_page
 
 
@@ -31,24 +33,14 @@ def test_despesas(requests):
     assert desps == requests.json()["dados"]
 
 
-def test_next_page():
+@pytest.mark.parametrize(("links", "next"), (
+    ({"links": [{"rel": "next",
+                 "href": "https://dadosabertos.camara.leg.br/api/v2/..."}]
+     }, "https://dadosabertos.camara.leg.br/api/v2/..."),
+    ({"links": [{"rel": "self",
+                 "href": "https://dadosabertos.camara.leg.br/api/v2/..."}]
+     }, None),
+))
+def test_next_page(links, next):
     """Testa a navegação na paginação da api."""
-    r = {
-        "links": [
-            {
-                "rel": "next",
-                "href": "https://dadosabertos.camara.leg.br/api/v2/..."
-            }
-        ]
-    }
-    assert _next_page(r) == "https://dadosabertos.camara.leg.br/api/v2/..."
-
-    s = {
-        "links": [
-            {
-                "rel": "self",
-                "href": "https://dadosabertos.camara.leg.br/api/v2/..."
-            }
-        ]
-    }
-    assert _next_page(s) == None
+    assert _next_page(links) == next

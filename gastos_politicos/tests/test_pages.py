@@ -1,3 +1,4 @@
+import pytest
 from flask import g
 
 from gastos_politicos.models import Feedback
@@ -9,27 +10,26 @@ def test_index(client):
     assert rv.status_code == 200
 
 
-def test_search_redirect(client):
-    rv = client.post("/q", data=dict(nome="", uf="", partido=""))
-    assert rv.status_code == 302    # Redirecionado para o index
-    rv = client.post("/q", data=dict(nome="NOME", uf="", partido=""))
-    assert rv.status_code == 302    # Redireciona para página do político
+@pytest.mark.parametrize(("nome", "uf", "partido", "codigo"), (
+    ("", "", "", 302),      # Redirecionado para o index
+    ("NOME", "", "", 302),  # Redirecionado para página do político
+))
+def test_search_redirect(client, nome, uf, partido, codigo):
+    rv = client.post("/q", data=dict(nome=nome, uf=uf, partido=partido))
+    assert rv.status_code == codigo
 
 
-def test_search_filter(client):
+@pytest.mark.parametrize(("nome", "uf", "partido", "texto"), (
+    ("NOME", "SP", "",     b"TODOS OS PARTIDOS / SP"),
+    ("NOME", "",   "REDE", b"REDE / TODOS OS ESTADOS"),
+    ("NOME", "SP", "REDE", b"REDE / SP"),
+))
+def test_search_filter(client, nome, uf, partido, texto):
     """Testa a busca por políticos."""
-    # Rederiza o filter.html
+    rv = client.post("/q", data=dict(nome=nome, uf=uf, partido=partido))
+    assert rv.status_code == 200
     # Testa alguns elementos no html retornado
-    rv = client.post("/q", data=dict(nome="NOME", uf="SP", partido=""))
-    assert rv.status_code == 200
-    print(rv.data)
-    assert b"TODOS OS PARTIDOS / SP" in rv.data
-    rv = client.post("/q", data=dict(nome="NOME", uf="", partido="REDE"))
-    assert rv.status_code == 200
-    assert b"REDE / TODOS OS ESTADOS" in rv.data
-    rv = client.post("/q", data=dict(nome="NOME", uf="SP", partido="REDE"))
-    assert rv.status_code == 200
-    assert b"REDE / SP" in rv.data
+    assert texto in rv.data
 
 
 def test_about(client):

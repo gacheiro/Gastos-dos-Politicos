@@ -6,7 +6,7 @@ from gastos_politicos import create_app
 from gastos_politicos.models import db
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def app():
     os.environ["APP_SETTINGS"] = "config.TestingConfig"
     app = create_app()
