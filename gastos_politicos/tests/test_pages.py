@@ -1,5 +1,5 @@
 import pytest
-from flask import g
+from flask import g, request
 
 from gastos_politicos.models import Feedback
 
@@ -30,6 +30,18 @@ def test_search_filter(client, nome, uf, partido, texto):
     assert rv.status_code == 200
     # Testa alguns elementos no html retornado
     assert texto in rv.data
+
+
+def test_show(client, politicos, reembolsos):
+    """Testa a página do político."""
+    rv = client.get("/p/1")
+    assert rv.status_code == 200
+    signed_token = g.csrf_token
+    rv = client.post("/p/1", data=dict(ano=2020, mes=8,
+                                       tipo="", csrf_token=signed_token),
+                     follow_redirects=True)
+    assert rv.status_code == 200
+    assert "/p/1?ano=2020&mes=8" in request.full_path
 
 
 def test_about(client):
