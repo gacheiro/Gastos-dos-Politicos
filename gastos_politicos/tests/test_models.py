@@ -52,11 +52,11 @@ def test_classificar_por(politicos, reembolsos, mes, uf, partido, ordem, result)
 
 
 @pytest.mark.parametrize(("id", "ano", "mes", "total"), (
-    (None, None, None, 9035.5),
-    (1,    None, None, 6755.5),
-    (1,    2020, None, 6755.5),
-    (1,    2020, 8,    6540.2),
-    (2,    2020, None, 2280),
+    (-1, None, None, 9035.5),
+    (1,  None, None, 6755.5),
+    (1,  2020, None, 6755.5),
+    (1,  2020, 8,    6540.2),
+    (2,  2020, None, 2280),
 ))
 def test_total_gasto(politicos, reembolsos, id, ano, mes, total):
     pol = Politico.query.get(id)

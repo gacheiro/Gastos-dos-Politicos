@@ -9,8 +9,7 @@ from gastos_politicos.models import db
 @pytest.fixture(scope="session")
 def app():
     os.environ["APP_SETTINGS"] = "config.TestingConfig"
-    app = create_app()
-    assert app.config["TESTING"]
+    app = create_app({"TESTING": True, "CACHE_NO_NULL_WARNING": True})
     return app
 
 

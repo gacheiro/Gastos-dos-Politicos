@@ -3,15 +3,21 @@ from flask import Flask
 from . import ext, cli, web, models
 
 
-def create_app(config=None):
+def create_app(config={}):
     app = Flask(__name__)
     app.config.from_object(os.environ['APP_SETTINGS'])
+    app.config.update(config)
+    init_app(app)
+    return app
+
+
+def init_app(app):
+    """Pluga e inicia o app com as extensões."""
     ext.init_app(app)
     cli.init_app(app)
     web.init_app(app)
     models.init_app(app)
     app.shell_context_processor(shell_context)
-    return app
 
 
 def shell_context():
