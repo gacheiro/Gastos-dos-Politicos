@@ -11,10 +11,10 @@
 
 
 {% macro politico_card(politico, total_gasto=None) %}
-  <div class="politico-card text-center">
-    <a href="{{ url_for('pages.show', id=politico.id) }}">
+  <div class="pol-cart">
+    <a class="link--none" href="{{ url_for('pages.show', id=politico.id) }}">
       <div class="retrato-wrap">
-        {{ retrato(politico) }}
+        {{ retrato(politico, tamanho=(67, 90)) }}
         {% if total_gasto %}
           <div class="retrato-wrap__badge-wrap">
             <span class="badge badge-success text-white rounded border border-white">
@@ -23,7 +23,10 @@
           </div>
         {% endif %}
       </div>
-      {{ politico_info(politico) }}
+      <div class="pol-cart__info">
+        <strong>{{ politico.nome }}</strong><br>
+        <span>{{ politico.partido }}/{{ politico.uf }}</span>
+      </div>
     </a>
   </div>
 {% endmacro %}

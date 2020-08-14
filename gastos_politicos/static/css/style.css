@@ -1,3 +1,4 @@
+/* Cartões do index */
 .cart {
   background-color: #f8f9fa;
   border: 1px solid #dee2e6;
@@ -20,6 +21,7 @@
   margin: 0 auto;
 }
 
+/* Reembolsos (recentes) */
 .m-reembolso {
   border-bottom: 1px solid #dee2e6;
   padding: .5rem;
@@ -37,6 +39,7 @@
   font-size: .9rem;
 }
 
+/* Layout */
 .page {
   background-color: rgb(240, 240, 240);
   min-height: 100vh;
@@ -53,6 +56,16 @@
   width: 100%;
 }
 
+/* Cartão político com foto e badge */
+.pol-cart {
+  margin: 8px 4px;
+  width: 120px;
+  font-size: .85rem;
+  line-height: normal;
+  text-align: center;
+}
+
+/* Gráficos políticos com foto e barra */
 .rank {
   font-size: .9rem;
 }
@@ -85,6 +98,7 @@
   width: 100%;
 }
 
+/* Foto com moldura circular */
 .retrato {
   background-color: #fff;
   /* o tamanho é definido dinamicamente */
@@ -96,20 +110,26 @@
   position: relative;
 }
 .retrato-wrap__badge-wrap {
-  position: absolute;
-  right: 0;
-  left: 0;
   bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 1rem;
+  position: absolute;
+  text-align: center;
 }
 
+/* Informações sobre gastos */
 .stats {
   font-size: 1.25rem;
   padding: .5rem 0;
   text-align: center;
 }
 
-/* Ultilitários */
+.tab {
+  font-size: 0.85rem;
+}
 
+/* Ultilitários */
 .link--none {
   color: #212529;
 }
@@ -122,38 +142,4 @@
   background-color: #ffc107;
   font-weight: bold;
   padding: 0 .25rem;
-}
-
-
-.politico-card {
-    width: 135px;
-    margin: 8px 4px;
-}
-
-.politico-info {
-    font-size: 0.85rem;
-    line-height: normal;
-}
-
-/* apaga a decoração dos links */
-a .politico-info {
-    color: black;
-}
-
-.table {
-    font-size: 0.85rem;
-}
-
-.ranking-card {
-    padding: 16px 8px;
-    margin: 16px 0;
-}
-
-.ranking-card a {
-    color: black;
-}
-
-.ranking-card a:hover {
-    text-decoration: none;
-    background-color: white;
 }
