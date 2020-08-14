@@ -1,14 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <section class="py-4 my-4 bg-light">
-    <div class="search-form-wrapper">
-      {% include "pages/_search_form.html" %}
-    </div>
+  <section class="cart">
+    {% include "pages/_search_form.html" %}
   </section>
-  <section class="card stats my-4">
-    <h5 class="card-header">
-      Deputados de <span class="texto-destaque">
+  <section class="cart">
+    <h5 class="cart__titulo">
+      Deputados de <span class="texto--destaq">
       {%- if form.partido.data -%}
         {{ form.partido.data }}
       {%- else -%}
@@ -20,7 +18,7 @@
       {%- endif -%}
       </span>
     </h5>
-    <div class="card-body">
+    <div class="cart__conteudo">
       {% with rank = ranking %}
         {% include "pages/_ranking.html" %}
       {% endwith %}

@@ -5,7 +5,7 @@
   <div class="retrato rounded-circle border border-muted"
        style="width: {{ m }}px; height: {{ m }}px">
     <img src="{{ politico.url_foto }}" alt="{{ politico.nome }}"
-         width="{{ width }}" height="{{ height }}">
+         width="{{ width }}px" height="{{ height }}px">
   </div>
 {% endmacro %}
 
@@ -13,10 +13,10 @@
 {% macro politico_card(politico, total_gasto=None) %}
   <div class="politico-card text-center">
     <a href="{{ url_for('pages.show', id=politico.id) }}">
-      <div class="retrato-wrapper">
+      <div class="retrato-wrap">
         {{ retrato(politico) }}
         {% if total_gasto %}
-          <div class="fixed-bottom-center">
+          <div class="retrato-wrap__badge-wrap">
             <span class="badge badge-success text-white rounded border border-white">
               {{ total_gasto|currency(verbose=True) }}
             </span>
@@ -59,33 +59,47 @@
 {% endmacro %}
 
 
-{% macro _inline_politico_info(politico, font_size) %}
-  {# Renderiza o nome, partido e uf do político em uma única linha. #}
-  <span class="inline-politico-info" style="font-size: {{ font_size }};">
-    <strong>{{ politico.nome }}</strong>
-    <span class="text-muted">({{ politico.partido }}/{{ politico.uf }})</span>
-  </span>
-{% endmacro %}
-
-
 {% macro media_reembolso(reembolso) %}
   <div id="{{ reembolso.cod_documento }}-{{ reembolso.num_documento }}"
-       class="media-reembolso media border-bottom border-black p-2">
-    <div class="mr-2">
-      <a class="link" href="{{ url_for('pages.show', id=reembolso.politico_id) }}">
+       class="media m-reembolso">
+    <div class="m-reembolso__foto">
+      <a href="{{ url_for('pages.show', id=reembolso.politico_id) }}">
         {{ retrato(reembolso.politico, tamanho=(50, 66)) }}
       </a>
     </div>
     <div class="media-body">
-      <small class="text-muted float-right" style="font-size: 0.8rem;">
+      <small class="m-reembolso__data">
         {{ reembolso.data.day }} de {{ reembolso.data.month|month_abbr }}
       </small>
-      <h5><a class="link" href="{{ url_for('pages.show', id=reembolso.politico_id) }}">
-        {{ _inline_politico_info(reembolso.politico, font_size="0.9rem") }}
-      </a></h5>
-      <p style="font-size: 0.9rem;">Gasto de {{ reembolso.valor_liquido|currency }}
-        em {{ reembolso.tipo.rstrip(".")|lower }}.
+      <a class="m-reembolso__info link--none"
+         href="{{ url_for('pages.show', id=reembolso.politico_id) }}">
+        <strong>{{ reembolso.politico.nome }}</strong>
+        <span class="text-muted">
+          ({{ reembolso.politico.partido }}/{{ reembolso.politico.uf }})
+        </span>
+      </a>
+      <p class="m-reembolso__conteudo">
+        Gasto de {{ reembolso.valor_liquido|currency }} em
+        {{ reembolso.tipo.rstrip(".")|lower }}.
       </p>
     </div>
   </div>
+{% endmacro %}
+
+
+{% macro politico_rank(politico, total, max) %}
+  <a class="rank__pol link--none" href="{{ url_for('pages.show',
+                                                   id=politico.id) }}">
+    <div class="rank__foto-wrap">
+      <img src="{{ politico.url_foto }}" alt="{{ politico.nome }}"
+           width="75%" height="100%">
+    </div>
+    <div class="rank__barra-wrap">
+      <strong>{{ politico.nome }}</strong>
+      <span class="text-muted">({{ politico.partido }}/{{ politico.uf}})</span>
+      <div class="rank__barra" style="width: {{ (total/max)*100 }}%;">
+        <strong>{{ total|currency(verbose=True) }}</strong>
+      </div>
+    </div>
+  </a>
 {% endmacro %}

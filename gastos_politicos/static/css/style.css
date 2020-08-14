@@ -1,25 +1,129 @@
-#page-container {
-    background-color: rgb(240, 240, 240);
-    position: relative;
-    min-height: 100vh;
+.cart {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  font-size: 1.25rem;
+  margin: 16px 0;
+  padding: 16px 8px;
+}
+.cart__titulo {
+  font-weight: bold;
+  margin-bottom: 24px;
+  text-align: center;
+  text-transform: uppercase;
+}
+.cart__conteudo {
+  font-size: 1rem;
 }
 
-#content-wrap {
-    padding-bottom: 3.5rem;
+.form__search {
+  max-width: 768px;
+  margin: 0 auto;
 }
 
-#footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 1.25rem;
+.m-reembolso {
+  border-bottom: 1px solid #dee2e6;
+  padding: .5rem;
+}
+.m-reembolso__foto {
+  margin-right: .5rem;
+}
+.m-reembolso__data {
+  color: #6c757d;
+  float: right;
+  font-size: .8rem;
+}
+.m-reembolso__info,
+.m-reembolso__conteudo {
+  font-size: .9rem;
 }
 
-.search-form-wrapper {
-    max-width: 768px;
-    margin-left: auto;
-    margin-right: auto;
+.page {
+  background-color: rgb(240, 240, 240);
+  min-height: 100vh;
+  position: relative;
 }
+.page__content {
+  padding-bottom: 3.5rem;
+}
+.page__footer {
+  background-color: #f8f9fa;
+  bottom: 0;
+  height: 60px;
+  position: absolute;
+  width: 100%;
+}
+
+.rank {
+  font-size: .9rem;
+}
+.rank__barra-wrap {
+  width: 70%;
+}
+.rank__barra {
+  background-color: #28a745;
+  border-radius: 50rem; /* rounded pill */
+  color: #fff;
+  font-size: 1rem;
+  height: 25px;
+  padding-right: 8px;
+  text-align: right;
+  /* width definido dinamicamente */
+}
+.rank__foto-wrap {
+  text-align: center;
+  background-color: #fff;
+  border-radius: 50%;
+  height: 4.5rem;
+  margin-right: .25rem;
+  overflow: hidden;
+  width: 4.5rem;
+}
+.rank__pol {
+  align-items: start;
+  display: flex;
+  padding: 4px 0;
+  width: 100%;
+}
+
+.retrato {
+  background-color: #fff;
+  /* o tamanho é definido dinamicamente */
+  margin: 0 auto;
+  overflow: hidden;
+  text-align: center;
+}
+.retrato-wrap {
+  position: relative;
+}
+.retrato-wrap__badge-wrap {
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.stats {
+  font-size: 1.25rem;
+  padding: .5rem 0;
+  text-align: center;
+}
+
+/* Ultilitários */
+
+.link--none {
+  color: #212529;
+}
+.link--none:hover {
+  color: #212529;
+  text-decoration: none;
+}
+
+.texto--destaq {
+  background-color: #ffc107;
+  font-weight: bold;
+  padding: 0 .25rem;
+}
+
 
 .politico-card {
     width: 135px;
@@ -36,39 +140,8 @@ a .politico-info {
     color: black;
 }
 
-.retrato-wrapper {
-    position: relative;
-}
-
-.retrato {
-    /* o tamanho é definido dinamicamente */
-    margin: 10px auto 0;
-    overflow: hidden;
-    text-align: center;
-    background-color: white;
-}
-
-.fixed-bottom-center {
-    position: absolute;
-    right: 0;
-    left: 0;
-    bottom: 0;
-}
-
-.stats {
-    background-color: #f8f9fa!important;
-    font-size: 1.25rem;
-}
-
 .table {
     font-size: 0.85rem;
-}
-
-.texto-destaque {
-    background-color: #ffc107!important;
-    padding-left: .25rem!important;
-    padding-right: .25rem!important;
-    font-weight: bold;
 }
 
 .ranking-card {
@@ -83,26 +156,4 @@ a .politico-info {
 .ranking-card a:hover {
     text-decoration: none;
     background-color: white;
-}
-
-.ultimos-reembolsos-card {
-    padding: 16px 8px 0 8px;
-    margin: 16px 0;
-}
-
-.titulo-card {
-    font-weight: bold;
-    text-align: center;
-    text-transform: uppercase;
-    margin-bottom: 24px;
-}
-
-/* Utilidades */
-
-.link {
-    color: black;
-}
-
-.link:hover {
-    text-decoration: none;
 }

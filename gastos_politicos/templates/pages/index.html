@@ -5,13 +5,9 @@
 
 
 {% block content %}
-  <section class="py-4 my-4 bg-light border">
-    <div class="p-2 mb-2">
-      {% include "shared/_stats.html" %}
-    </div>
-    <div class="search-form-wrapper">
-      {% include "pages/_search_form.html" %}
-    </div>
+  <section class="cart">
+    {% include "shared/_stats.html" %}
+    {% include "pages/_search_form.html" %}
   </section>
 
   <section class="mb-4">
@@ -20,18 +16,12 @@
         {% include "pages/_latest.html" %}
       </div>
       <div class="col-md-6">
-        <div class="ranking-card bg-light border">
-          <h5 class="titulo-card">Quem mais gastou em <span class="texto-destaque">{{ mes|month_abbr|upper }}/{{ ano }}</span></h5>
-          {% with ranking = gastou_mais_mes %}
-            {% include "pages/_ranking_v.html" %}
-          {% endwith %}
-        </div>
-        <div class="ranking-card bg-light border">
-          <h5 class="titulo-card">Quem mais gastou em <span class="texto-destaque">{{ ano }}</span></h5>
-          {% with ranking = gastou_mais %}
-            {% include "pages/_ranking_v.html" %}
-          {% endwith %}
-        </div>
+        {% with ranking=ranking_mes, periodo=mes|month_name %}
+          {% include "pages/_ranking_v.html" %}
+        {% endwith %}
+        {% with ranking=ranking_ano, periodo=ano %}
+          {% include "pages/_ranking_v.html" %}
+        {% endwith %}
       </div>
     </div>
   </section>

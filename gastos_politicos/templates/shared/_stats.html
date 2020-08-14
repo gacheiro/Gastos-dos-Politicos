@@ -1,16 +1,16 @@
 {% set ano = request.args.get("ano", config["CURRENT_YEAR"]) %}
 {% set mes = request.args.get("mes") %}
 
-<div class="text-center stats">
-  <p>Em <span class="texto-destaque">
-    {%- if mes %}
-      {{ mes|month_abbr|upper }}/
-    {%- endif -%}
-    {{ ano }}</span>, gastos de <span class="texto-destaque">
-    {%- if parlamentar -%}
-      {{ parlamentar.nome|upper }}
-    {%- else -%}
-      TODOS OS DEPUTADOS
-    {%- endif -%}</span> com a cota parlamentar:</p>
-  <p><strong>{{ total_gasto|currency }}</strong>.</p>
-</div>
+<p class="stats">
+  Em <span class="texto--destaq">
+  {%- if mes %}
+    {{ mes|month_abbr|upper }}/
+  {%- endif -%}
+  {{ ano }}</span>, gastos de <span class="texto--destaq">
+  {%- if parlamentar -%}
+    {{ parlamentar.nome|upper }}
+  {%- else -%}
+    TODOS OS DEPUTADOS
+  {%- endif -%}</span> com a cota parlamentar:<br><br>
+  <strong>{{ total_gasto|currency }}</strong>.
+</p>

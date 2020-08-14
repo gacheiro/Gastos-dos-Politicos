@@ -13,8 +13,8 @@
     {% block head %} {% endblock %}
   </head>
   <body>
-    <div id="page-container">
-      <div id="content-wrap">
+    <div class="page">
+      <div class="page__content">
         <header>
           {% include "_navbar.html" %}
         </header>
@@ -23,7 +23,7 @@
           {% endblock %}
         </div>
       </div>
-      <footer id="footer" class="bg-light">
+      <footer class="page__footer">
         <div class="container">
           {% include "_footer.html" %}
         </div>

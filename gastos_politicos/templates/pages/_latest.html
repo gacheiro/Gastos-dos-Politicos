@@ -1,8 +1,10 @@
 {% from "shared/macros.html" import media_reembolso %}
 
-<div class="ultimos-reembolsos-card bg-light border">
-  <h5 class="titulo-card">Gastos <span class="texto-destaque">mais recentes</span></h5>
-  <div class="d-flex flex-column">
+<div class="cart">
+  <h5 class="cart__titulo">
+    Gastos <span class="texto--destaq">mais recentes</span>
+  </h5>
+  <div class="cart__conteudo">
     {% for reembolso in reembolsos_recentes %}
       {{ media_reembolso(reembolso) }}
     {% endfor %}

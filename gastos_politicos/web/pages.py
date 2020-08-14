@@ -16,9 +16,9 @@ def index():
                         current_app.config["CURRENT_YEAR"], 6)
     kwargs = {
         "total_gasto": Reembolso.total_gasto(ano=ano),
-        "gastou_mais_mes": Politico.classificar_por(ano=ano, mes=mes,
-                                                    limite=limite),
-        "gastou_mais": Politico.classificar_por(ano=ano, limite=limite),
+        "ranking_mes": Politico.classificar_por(ano=ano, mes=mes,
+                                                limite=limite),
+        "ranking_ano": Politico.classificar_por(ano=ano, limite=limite),
         "reembolsos_recentes": Reembolso.mais_recentes(acima_de=1000, n=11),
         # Formulário para buscar um político específico
         "form": BuscaPoliticoForm(),
