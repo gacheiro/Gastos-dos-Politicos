@@ -24,6 +24,10 @@ venv\Scripts\activate      # windows
 pip install -e .
 ```
 
+```bash
+sudo locale-gen pt_BR.UTF-8
+```
+
 Agora é preciso configurar o app. Copie o conteúdo do arquivo `env.example` para um arquivo `.env`.
 Em seguida rode os testes para ver se está tudo funcionando:
 

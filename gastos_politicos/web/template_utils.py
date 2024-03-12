@@ -2,11 +2,7 @@ import os
 import locale
 import calendar
 
-# Passando pt_BR diretamente para setlocale causava o erro:
-# locale.Error unsupported locale setting
-# Assim deixamos o locale ler a lingua a partir da variável de ambiente LANG
-os.environ["LANG"] = "pt_BR"
-locale.setlocale(locale.LC_ALL, "")
+locale.setlocale(locale.LC_ALL, "pt_BR.UTF-8")
 
 
 def month_name(month):

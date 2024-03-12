@@ -66,7 +66,7 @@ def show(id):
     p = Politico.query.get_or_404(id)
     # Aplica os filtros de mes, ano e a paginação
     mes, ano, tipo, page = (request.args.get("mes"),
-                            request.args.get("ano", 2020, type=int),
+                            request.args.get("ano", 2024, type=int),
                             request.args.get("tipo"),
                             request.args.get("page", 1, type=int))
 
@@ -80,7 +80,7 @@ def show(id):
         params.pop("csrf_token")
         return redirect(url_for("pages.show", id=id, **params))
 
-    pagination = p.despesas(ano, mes).paginate(page, 40,
+    pagination = p.despesas(ano, mes).paginate(page=page, per_page=40,
                                                error_out=True)
     total_gasto = Reembolso.total_gasto(p, ano=ano, mes=mes)
     return render_template("pages/show.html",

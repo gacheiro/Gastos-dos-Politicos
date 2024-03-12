@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import SelectField, TextAreaField
-from wtforms.fields.html5 import EmailField, SearchField
+from wtforms.fields import EmailField, SearchField
 from wtforms.validators import InputRequired, Length
 
 from .template_utils import month_name
