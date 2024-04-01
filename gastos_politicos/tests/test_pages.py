@@ -37,8 +37,9 @@ def test_show(client, politicos, reembolsos):
     rv = client.get("/p/1")
     assert rv.status_code == 200
     signed_token = g.csrf_token
-    rv = client.post("/p/1", data=dict(ano=2020, mes=8,
-                                       tipo="", csrf_token=signed_token),
+    rv = client.post("/p/1", query_string=dict(ano=2020, mes=8,
+                                               tipo="",
+                                               csrf_token=signed_token),
                      follow_redirects=True)
     assert rv.status_code == 200
     assert "/p/1?ano=2020&mes=8" in request.full_path
